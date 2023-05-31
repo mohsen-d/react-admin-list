@@ -13,5 +13,8 @@
     "admin"
   ],
   "author": "Mohsen Dorparasti",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "joifaker": "^1.0.3"
+  }
 }
