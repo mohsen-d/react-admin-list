@@ -42,6 +42,8 @@ export default ({
 }) => {
   loadingtdColSpan = headers.length + 2;
 
+  const listHeaders = utils.getHeaders(headers, data);
+
   if (customOptions) Object.assign(options, customOptions);
 
   const [currentSize, setCurrentSize] = useState(initialSize);
@@ -166,7 +168,7 @@ export default ({
             keyword,
             selectedIds,
             sortInfo,
-            headers,
+            headers: listHeaders,
             options,
             currentSize,
             loadingtdColSpan,
@@ -187,7 +189,7 @@ export default ({
                 "table" + (options.classes ? " " + options.classes : "")
               }
             >
-              <Header list={headers} />
+              <Header list={listHeaders} />
               <Body list={data} />
               {options.pagination && (
                 <Footer

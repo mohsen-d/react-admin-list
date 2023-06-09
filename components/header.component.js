@@ -25,7 +25,7 @@ export default function Header({ list }) {
           )}
         </th>
         {list.map((l, i) => (
-          <HeaderCell key={i} title={l.title} />
+          <HeaderCell key={i} title={l} />
         ))}
       </tr>
     </thead>
