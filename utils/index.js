@@ -18,4 +18,20 @@ export default {
 
     return ["No headers defined"];
   },
+
+  setUrlParam: function (params) {
+    if (history.pushState) {
+      var currentParams = new URLSearchParams(window.location.search);
+      params.forEach((p) => {
+        currentParams.set(p.name, p.value);
+      });
+
+      var newUrl =
+        window.location.origin +
+        window.location.pathname +
+        "?" +
+        currentParams.toString();
+      window.history.pushState({ path: newUrl }, "", newUrl);
+    }
+  },
 };
