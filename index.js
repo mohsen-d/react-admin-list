@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import ListContext from "./context/list.context";
 import utils from "./utils";
-
+import { useUpdateEffect } from "./hooks";
 import Body from "./components/body.component";
 import Confirm from "./components/confirm.component";
 import { CurrentSearchInfo } from "./components/search.component";
+import { getSortInfo } from "./components/sort.component";
 import Footer from "./components/footer.component";
 import FormPlaceholder from "./components/formPlaceHolder.component";
 import Header from "./components/header.component";
@@ -31,7 +32,7 @@ export default ({
   headers = [],
   data,
   search: { keyword, handler: handleSearch },
-  sort: { sortBy, sortDirection, handler: handleSort, sortFields },
+  sort = {},
   loading,
   handleNew,
   handleEdit,
@@ -52,28 +53,9 @@ export default ({
   const [isLoading, setIsLoading] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [handleConfirm, setHandleConfirm] = useState(() => () => {});
-  const [sortInfo, setSortInfo] = useState({
-    sortBy,
-    sortDirection,
-    sortFields: getSortFields(),
-  });
+  const [sortInfo, setSortInfo] = useState(getSortInfo(sort, headers, data));
 
   utils.currentWindowSize(setCurrentSize);
-
-  function getSortFields() {
-    if (sortFields && sortFields.length > 0) return sortFields;
-
-    if (headers.length > 0) {
-      const definedInHeaders = headers
-        .filter((h) => h.canSortBy)
-        .map((h) => h.title);
-      if (definedInHeaders.length > 0) return definedInHeaders;
-    }
-
-    if (data.length > 0) {
-      return Object.keys(data[0]);
-    }
-  }
 
   function handleSelection(e) {
     setSelectedIds((currentIds) =>
@@ -93,7 +75,7 @@ export default ({
     let value = e.target.value || e.target.attributes["data-sortby"].value;
     let key = e.target.id || "sortBy";
 
-    if (value === sortInfo.sortBy) {
+    if (sortInfo.sortBy && value === sortInfo.sortBy) {
       key = "sortDirection";
       value = `${sortInfo.sortDirection * -1}`;
     }
@@ -101,11 +83,13 @@ export default ({
     setSortInfo((prev) => {
       return { ...prev, [key]: value };
     });
+  }
 
-    await runHandler(false, "sort", handleSort, key, value);
+  useUpdateEffect(() => {
+    runHandler(false, "sort", sortInfo.handler, sortInfo);
 
     setFormToRender("");
-  }
+  }, [sortInfo]);
 
   async function handlePageChange(p) {
     await runHandler(false, "pagination", pagination.handler, p);

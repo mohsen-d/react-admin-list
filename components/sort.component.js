@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import ListContext from "../context/list.context";
+import { defaultSort } from "../defaults";
 
 export default function Sort() {
   const context = useContext(ListContext);
@@ -22,6 +23,11 @@ export default function Sort() {
           onChange={context.handleSortChange}
           value={context.sortInfo.sortBy}
         >
+          {context.sortInfo.sortBy === "" && (
+            <option key={-1} value="">
+              Sort By
+            </option>
+          )}
           {context.sortInfo.sortFields.map((f, i) => (
             <option key={i} value={f}>
               {f}
@@ -42,4 +48,29 @@ export default function Sort() {
       </div>
     </div>
   );
+}
+
+export const getSortInfo = (userSort, userHeaders, data) => {
+  const result = {};
+  Object.assign(result, defaultSort, userSort);
+
+  if (result.sortFields.length === 0)
+    result.sortFields = getSortFields(userHeaders, data);
+
+  return result;
+};
+
+function getSortFields(headers, data) {
+  if (headers.length > 0) {
+    const definedInHeaders = headers
+      .filter((h) => h.canSortBy)
+      .map((h) => h.title);
+    if (definedInHeaders.length > 0) return { sortFields: definedInHeaders };
+  }
+
+  if (data.length > 0) {
+    return { sortFields: Object.keys(data[0]) };
+  }
+
+  return [];
 }
