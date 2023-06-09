@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import ListContext from "./context/list.context";
+import { ListContext } from "./context";
 import utils from "./utils";
 import { useUpdateEffect } from "./hooks";
-import Body from "./components/body.component";
-import Confirm from "./components/confirm.component";
-import { CurrentSearchInfo } from "./components/search.component";
-import { getSortInfo } from "./components/sort.component";
-import Footer from "./components/footer.component";
-import FormPlaceholder from "./components/formPlaceHolder.component";
-import Header from "./components/header.component";
-import { ListCommands } from "./components/command.component";
-import Loading from "./components/loading.component";
+import {
+  Body,
+  Confirm,
+  CurrentSearchInfo,
+  getSortInfo,
+  Footer,
+  FormPlaceholder,
+  Header,
+  ListCommands,
+  Loading,
+} from "./components";
 
 let loadingtdColSpan = 2;
 

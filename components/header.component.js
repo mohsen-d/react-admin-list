@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import ListContext from "../context/list.context";
+import { ListContext } from "../context";
 
-export default function Header({ list }) {
+export function Header({ list }) {
   const context = useContext(ListContext);
 
   function selectAll(e) {

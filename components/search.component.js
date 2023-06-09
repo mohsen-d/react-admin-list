@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import ListContext from "../context/list.context";
+import { ListContext } from "../context";
 
-export default function Search() {
+export function Search() {
   const handleNewSearch = useContext(ListContext).handleNewSearch;
 
   function handleKeyPress(e) {

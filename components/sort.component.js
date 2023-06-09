@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import ListContext from "../context/list.context";
+import { ListContext } from "../context";
+
 import { defaultSort } from "../defaults";
 
-export default function Sort() {
+export function Sort() {
   const context = useContext(ListContext);
 
   return (

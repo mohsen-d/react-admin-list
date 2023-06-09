@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import ListContext from "../context/list.context";
+import { ListContext } from "../context";
+
 import styles from "../assets/list.style.css";
 
 export function Command({

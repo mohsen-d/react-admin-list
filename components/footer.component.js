@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import ListContext from "../context/list.context";
-import Pagination from "./pagination.component";
+import { ListContext } from "../context";
 
-export default function Footer({ pagination }) {
+import { Pagination } from "./pagination.component";
+
+export function Footer({ pagination }) {
   const context = useContext(ListContext);
   return (
     <tfoot>

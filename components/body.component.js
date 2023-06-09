@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 
-import ListContext from "../context/list.context";
+import { ListContext } from "../context";
 
 import { RowCommands } from "./command.component";
 
-export default function Body({ list }) {
+export function Body({ list }) {
   const context = useContext(ListContext);
   return (
     <tbody>

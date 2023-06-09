@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { createPortal } from "react-dom";
-import ListContext from "../context/list.context";
+import { ListContext } from "../context";
+
 import styles from "../assets/list.style.css";
 
-export default function Confirm({ show, onConfirm, onCancel }) {
+export function Confirm({ show, onConfirm, onCancel }) {
   const context = useContext(ListContext);
   const modalWidth = getModalWidth(context.currentSize);
 

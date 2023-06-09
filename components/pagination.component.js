@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import utils from "../utils/";
 
-export default ({
+export function Pagination({
   totalRecords,
   recordsPerPage,
   currentPage,
   urlTemplate,
   handler,
-}) => {
+}) {
   const [currentSize, setCurrentSize] = useState(570);
   utils.currentWindowSize(setCurrentSize);
 
@@ -119,4 +119,4 @@ export default ({
   ) : (
     ""
   );
-};
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../assets/list.style.css";
 
-export default function Loading({ enable }) {
+export function Loading({ enable }) {
   return enable ? (
     <div
       className={

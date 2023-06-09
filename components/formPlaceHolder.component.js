@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
+import { ListContext } from "../context";
 
-import ListContext from "../context/list.context";
+import { Search } from "./search.component";
+import { Sort } from "./sort.component";
 
-import Search from "./search.component";
-import Sort from "./sort.component";
-
-export default function FormPlaceholder({ formToRender }) {
+export function FormPlaceholder({ formToRender }) {
   const context = useContext(ListContext);
   const output = [];
 
