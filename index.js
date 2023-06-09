@@ -7,6 +7,7 @@ import {
   Body,
   Confirm,
   CurrentSearchInfo,
+  getSearchInfo,
   getSortInfo,
   Footer,
   FormPlaceholder,
@@ -33,7 +34,7 @@ const options = {
 export default ({
   headers = [],
   data,
-  search: { keyword, handler: handleSearch },
+  search = {},
   sort = {},
   loading,
   handleNew,
@@ -56,6 +57,7 @@ export default ({
   const [showConfirm, setShowConfirm] = useState(false);
   const [handleConfirm, setHandleConfirm] = useState(() => () => {});
   const [sortInfo, setSortInfo] = useState(getSortInfo(sort, headers, data));
+  const [searchInfo, setSearchInfo] = useState(getSearchInfo(search));
 
   utils.currentWindowSize(setCurrentSize);
 
@@ -98,9 +100,16 @@ export default ({
   }
 
   async function handleNewSearch(keyword) {
-    await runHandler(false, "search", handleSearch, keyword);
-    if (formToRender === "search") setFormToRender("");
+    setSearchInfo((prev) => ({
+      ...prev,
+      keyword: keyword,
+    }));
   }
+
+  useUpdateEffect(() => {
+    runHandler(false, "search", searchInfo.handler, searchInfo.keyword);
+    if (formToRender === "search") setFormToRender("");
+  }, [searchInfo]);
 
   function handleConfirmCancel() {
     clearConfirmInfo();
@@ -151,7 +160,7 @@ export default ({
             handleDelete,
             runHandler,
             renderForm: setFormToRender,
-            keyword,
+            searchInfo,
             selectedIds,
             sortInfo,
             headers: listHeaders,

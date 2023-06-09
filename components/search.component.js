@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { ListContext } from "../context";
+import { defaultSearch } from "../defaults";
 
 export function Search() {
   const handleNewSearch = useContext(ListContext).handleNewSearch;
@@ -40,9 +41,11 @@ export function CurrentSearchInfo() {
 
   return (
     <div className="my-3 mt-lg-0 position-relative">
-      {context.keyword && context.keyword.length > 0 && (
+      {context.searchInfo.keyword && context.searchInfo.keyword.length > 0 && (
         <div className="bg-secondary-subtle p-2 d-flex">
-          <div className="flex-grow-1">Filtered by: {context.keyword}</div>
+          <div className="flex-grow-1">
+            Filtered by: {context.searchInfo.keyword}
+          </div>
           <div className="me-2">
             <a
               role="button"
@@ -67,4 +70,10 @@ export function CurrentSearchInfo() {
       )}
     </div>
   );
+}
+
+export function getSearchInfo(userSearch) {
+  const result = {};
+  Object.assign(result, defaultSearch, userSearch);
+  return result;
 }
