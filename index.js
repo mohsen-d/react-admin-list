@@ -19,8 +19,6 @@ import {
 
 let loadingtdColSpan = 2;
 
-const initialSize = document.body.clientWidth;
-
 const options = {
   classes: "",
   multipleSelection: true,
@@ -51,7 +49,7 @@ export default ({
 
   if (customOptions) Object.assign(options, customOptions);
 
-  const [currentSize, setCurrentSize] = useState(initialSize);
+  const [currentSize, setCurrentSize] = useState(utils.currentWindowWidth);
   const [selectedIds, setSelectedIds] = useState([]);
   const [formToRender, setFormToRender] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +61,7 @@ export default ({
     getPaginationInfo(pagination, data)
   );
 
-  utils.currentWindowSize(setCurrentSize);
+  utils.watchWindowWidth(setCurrentSize);
 
   function handleSelection(e) {
     setSelectedIds((currentIds) =>

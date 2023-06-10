@@ -1,5 +1,5 @@
 export default {
-  currentWindowSize: function (callback) {
+  watchWindowWidth: function (callback) {
     const ro = new ResizeObserver((entries) => {
       for (let entry of entries) {
         const cr = entry.contentRect;
@@ -9,6 +9,8 @@ export default {
 
     ro.observe(document.body);
   },
+
+  currentWindowWidth: document.body.clientWidth,
 
   getHeaders: function (userHeaders, data) {
     if (userHeaders.length > 0)

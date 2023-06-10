@@ -8,8 +8,8 @@ export function Pagination({
   currentPage,
   handler,
 }) {
-  const [currentSize, setCurrentSize] = useState(570);
-  utils.currentWindowSize(setCurrentSize);
+  const [currentSize, setCurrentSize] = useState(utils.currentWindowWidth);
+  utils.watchWindowWidth(setCurrentSize);
 
   const numberOfPages = Math.ceil(totalRecords / recordsPerPage);
   const numericPages =
