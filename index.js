@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { defaultNew } from "./defaults";
 import { ListContext } from "./context";
 import utils from "./utils";
 import { useUpdateEffect } from "./hooks";
@@ -37,7 +38,7 @@ export default ({
   search = {},
   sort = {},
   loading = {},
-  handleNew,
+  New,
   handleEdit,
   handleDelete,
   pagination = {},
@@ -47,6 +48,7 @@ export default ({
   loadingtdColSpan = headers.length + 2;
 
   const listHeaders = utils.getHeaders(headers, data);
+  const handleNew = New ?? defaultNew;
 
   if (customOptions) Object.assign(options, customOptions);
 
