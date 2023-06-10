@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import utils from "../utils/";
+import { defaultPagination } from "../defaults";
 
 export function Pagination({
   totalRecords,
@@ -119,4 +120,14 @@ export function Pagination({
   ) : (
     ""
   );
+}
+
+export function getPaginationInfo(userPagination, data) {
+  const result = {};
+
+  Object.assign(result, defaultPagination, userPagination);
+
+  if (result.totalRecords < 1) result.totalRecords = data.length;
+
+  return result;
 }

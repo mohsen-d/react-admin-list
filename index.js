@@ -7,6 +7,7 @@ import {
   Body,
   Confirm,
   CurrentSearchInfo,
+  getPaginationInfo,
   getSearchInfo,
   getSortInfo,
   Footer,
@@ -40,7 +41,7 @@ export default ({
   handleNew,
   handleEdit,
   handleDelete,
-  pagination,
+  pagination = {},
   commands,
   options: customOptions,
 }) => {
@@ -58,6 +59,9 @@ export default ({
   const [handleConfirm, setHandleConfirm] = useState(() => () => {});
   const [sortInfo, setSortInfo] = useState(getSortInfo(sort, headers, data));
   const [searchInfo, setSearchInfo] = useState(getSearchInfo(search));
+  const [paginationInfo, setPaginationInfo] = useState(
+    getPaginationInfo(pagination, data)
+  );
 
   utils.currentWindowSize(setCurrentSize);
 
@@ -95,11 +99,23 @@ export default ({
     setFormToRender("");
   }, [sortInfo]);
 
-  async function handlePageChange(p) {
-    await runHandler(false, "pagination", pagination.handler, p);
+  function handlePageChange(p) {
+    setPaginationInfo((prev) => ({
+      ...prev,
+      currentPage: p,
+    }));
   }
 
-  async function handleNewSearch(keyword) {
+  useUpdateEffect(() => {
+    runHandler(
+      false,
+      "pagination",
+      paginationInfo.handler,
+      paginationInfo.currentPage
+    );
+  }, [paginationInfo]);
+
+  function handleNewSearch(keyword) {
     setSearchInfo((prev) => ({
       ...prev,
       keyword: keyword,
@@ -186,11 +202,7 @@ export default ({
             >
               <Header list={listHeaders} />
               <Body list={data} />
-              {options.pagination && (
-                <Footer
-                  pagination={{ ...pagination, handler: handlePageChange }}
-                />
-              )}
+              {options.pagination && <Footer pagination={paginationInfo} />}
             </table>
           </div>
         </ListContext.Provider>
