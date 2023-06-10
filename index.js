@@ -7,6 +7,7 @@ import {
   Body,
   Confirm,
   CurrentSearchInfo,
+  getLoadingInfo,
   getPaginationInfo,
   getSearchInfo,
   getSortInfo,
@@ -35,7 +36,7 @@ export default ({
   data,
   search = {},
   sort = {},
-  loading,
+  loading = {},
   handleNew,
   handleEdit,
   handleDelete,
@@ -52,9 +53,9 @@ export default ({
   const [currentSize, setCurrentSize] = useState(utils.currentWindowWidth);
   const [selectedIds, setSelectedIds] = useState([]);
   const [formToRender, setFormToRender] = useState();
-  const [isLoading, setIsLoading] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [handleConfirm, setHandleConfirm] = useState(() => () => {});
+  const [loadingInfo, setLoadingInfo] = useState(getLoadingInfo(loading));
   const [sortInfo, setSortInfo] = useState(getSortInfo(sort, headers, data));
   const [searchInfo, setSearchInfo] = useState(getSearchInfo(search));
   const [paginationInfo, setPaginationInfo] = useState(
@@ -62,6 +63,13 @@ export default ({
   );
 
   utils.watchWindowWidth(setCurrentSize);
+
+  function setIsLoading(isLoading) {
+    setLoadingInfo((prev) => ({
+      ...prev,
+      isLoading,
+    }));
+  }
 
   function handleSelection(e) {
     setSelectedIds((currentIds) =>
@@ -150,10 +158,10 @@ export default ({
     }
 
     setIsLoading(true);
-    loading.handler(handlerName, "started");
+    loadingInfo.handler(handlerName, "started");
     const result = await handler(...args);
     setIsLoading(false);
-    loading.handler(handlerName, "ended");
+    loadingInfo.handler(handlerName, "ended");
     return result;
   }
 
@@ -183,7 +191,7 @@ export default ({
             loadingtdColSpan,
           }}
         >
-          <Loading enable={isLoading && loading.disableList} />
+          <Loading enable={loadingInfo.isLoading && loadingInfo.disableList} />
           <Confirm
             show={showConfirm}
             onConfirm={handleConfirm}
