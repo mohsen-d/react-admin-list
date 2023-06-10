@@ -1,5 +1,5 @@
 import utils from "../utils";
 
-export const defaultNew = () => {
+export const defaultAdd = () => {
   utils.setUrlParam([{ name: "page", value: "new" }]);
 };

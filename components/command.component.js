@@ -67,7 +67,7 @@ export function ListCommands({ customCommands }) {
             title="new"
             icon="bi-plus"
             className="btn btn-outline-success me-1"
-            handler={context.handleNew}
+            handler={context.handleAdd}
             listCommand={false}
             needsConfirm={false}
           />
