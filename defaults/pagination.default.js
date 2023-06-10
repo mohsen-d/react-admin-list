@@ -7,5 +7,4 @@ export const defaultPagination = {
   totalRecords: 0,
   recordsPerPage: 2,
   currentPage: 1,
-  urlTemplate: "",
 };

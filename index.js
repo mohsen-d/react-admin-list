@@ -202,7 +202,11 @@ export default ({
             >
               <Header list={listHeaders} />
               <Body list={data} />
-              {options.pagination && <Footer pagination={paginationInfo} />}
+              {options.pagination && (
+                <Footer
+                  pagination={{ ...paginationInfo, handler: handlePageChange }}
+                />
+              )}
             </table>
           </div>
         </ListContext.Provider>

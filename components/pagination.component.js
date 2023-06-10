@@ -6,7 +6,6 @@ export function Pagination({
   totalRecords,
   recordsPerPage,
   currentPage,
-  urlTemplate,
   handler,
 }) {
   const [currentSize, setCurrentSize] = useState(570);
@@ -18,15 +17,10 @@ export function Pagination({
       ? [currentPage - 1, currentPage, currentPage + 1]
       : [1, 2, 3];
 
-  async function handlePageChange(e) {
-    if (handler) {
-      e.preventDefault();
-      return await handler(e.target.attributes["data-page"].value);
-    }
-  }
+  console.log(numericPages);
 
-  function generateUrl(pageNumber) {
-    return urlTemplate.replace("#page", pageNumber);
+  function handlePageChange(e) {
+    handler(parseInt(e.target.attributes["data-page"].value));
   }
 
   const className = `pagination justify-content-center${
@@ -37,12 +31,7 @@ export function Pagination({
     <nav>
       <ul className={className}>
         <li className="page-item">
-          <a
-            data-page={1}
-            className="page-link"
-            href={generateUrl(1)}
-            onClick={handlePageChange}
-          >
+          <a data-page={1} className="page-link" onClick={handlePageChange}>
             &laquo;
           </a>
         </li>
@@ -50,7 +39,6 @@ export function Pagination({
           <a
             className="page-link"
             data-page={numericPages[0]}
-            href={generateUrl(numericPages[0])}
             onClick={handlePageChange}
           >
             &lsaquo;
@@ -64,7 +52,6 @@ export function Pagination({
           <a
             data-page={numericPages[0]}
             className="page-link"
-            href={generateUrl(numericPages[0])}
             onClick={handlePageChange}
           >
             {numericPages[0]}
@@ -79,7 +66,6 @@ export function Pagination({
           <a
             data-page={numericPages[1]}
             className="page-link"
-            href={generateUrl(numericPages[1])}
             onClick={handlePageChange}
           >
             {numericPages[1]}
@@ -89,7 +75,6 @@ export function Pagination({
           <a
             data-page={numericPages[2]}
             className="page-link"
-            href={generateUrl(numericPages[2])}
             onClick={handlePageChange}
           >
             {numericPages[2]}
@@ -99,7 +84,6 @@ export function Pagination({
           <a
             className="page-link"
             data-page={numericPages[2]}
-            href={generateUrl(numericPages[2])}
             onClick={handlePageChange}
           >
             &rsaquo;
@@ -109,7 +93,6 @@ export function Pagination({
           <a
             className="page-link"
             data-page={numberOfPages}
-            href={generateUrl(numberOfPages)}
             onClick={handlePageChange}
           >
             &raquo;
