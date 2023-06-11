@@ -105,12 +105,12 @@ export function ListCommands({ customCommands }) {
       </div>
 
       <div className={context.selectedIds.length === 0 ? "d-none" : "d-inline"}>
-        {context.options.delete && (
+        {context.options.remove && context.handleRemove && (
           <Command
-            title="delete"
+            title="remove"
             icon="bi-x"
             className="btn btn-outline-danger me-1"
-            handler={context.handleDelete}
+            handler={context.handleRemove}
           />
         )}
 
@@ -150,24 +150,28 @@ export function RowCommands({ id }) {
         )}
       </div>
 
-      <div className="d-none d-md-inline me-md-2">
-        <Command
-          title="edit"
-          icon="bi-pencil-square"
-          className="btn text-secondary p-0"
-          handler={() => context.handleEdit([id])}
-          needsConfirm={false}
-        />
-      </div>
+      {context.options.edit && (
+        <div className="d-none d-md-inline me-md-2">
+          <Command
+            title="edit"
+            icon="bi-pencil-square"
+            className="btn text-secondary p-0"
+            handler={() => context.handleEdit([id])}
+            needsConfirm={false}
+          />
+        </div>
+      )}
 
-      <div className="d-none d-md-inline">
-        <Command
-          title="delete"
-          icon="bi-trash-fill"
-          className="btn text-secondary p-0"
-          handler={() => context.handleDelete([id])}
-        />
-      </div>
+      {context.options.remove && context.handleRemove && (
+        <div className="d-none d-md-inline">
+          <Command
+            title="remove"
+            icon="bi-trash-fill"
+            className="btn text-secondary p-0"
+            handler={() => context.handleRemove([id])}
+          />
+        </div>
+      )}
     </>
   );
 }

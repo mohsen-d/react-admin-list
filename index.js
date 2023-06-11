@@ -25,7 +25,7 @@ const options = {
   classes: "",
   multipleSelection: true,
   edit: true,
-  delete: true,
+  remove: true,
   new: true,
   sort: true,
   search: true,
@@ -40,7 +40,7 @@ export default ({
   loading = {},
   add,
   edit,
-  handleDelete,
+  remove,
   pagination = {},
   commands,
   options: customOptions,
@@ -50,6 +50,7 @@ export default ({
   const listHeaders = utils.getHeaders(headers, data);
   const handleAdd = add ?? defaultAdd;
   const handleEdit = edit ?? defaultEdit;
+  const handleRemove = remove;
 
   if (customOptions) Object.assign(options, customOptions);
 
@@ -182,7 +183,7 @@ export default ({
             handleNewSearch,
             handleAdd,
             handleEdit,
-            handleDelete,
+            handleRemove,
             runHandler,
             renderForm: setFormToRender,
             searchInfo,
