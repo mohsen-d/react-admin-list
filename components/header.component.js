@@ -24,20 +24,20 @@ export function Header({ list }) {
             />
           )}
         </th>
-        {list.map((l, i) => (
-          <HeaderCell key={i} title={l} />
+        {list.map((h, i) => (
+          <HeaderCell key={i} title={h.title} classes={h.classes} />
         ))}
       </tr>
     </thead>
   );
 }
 
-function HeaderCell({ title }) {
+function HeaderCell({ title, classes }) {
   const { sortInfo, handleSortChange } = useContext(ListContext);
-
+  const isCurrentSortField = title === sortInfo.sortBy;
   return (
-    <th className="text-center">
-      {title === sortInfo.sortBy ? (
+    <th className={"text-center" + (classes ? " " + classes : "")}>
+      {isCurrentSortField ? (
         sortInfo.sortDirection === "1" ? (
           <span className="text-secondary">&#8675; </span>
         ) : (
@@ -46,18 +46,15 @@ function HeaderCell({ title }) {
       ) : (
         <span className="pe-2">&nbsp;</span>
       )}
-
-      {sortInfo.sortFields.includes(title) ? (
-        <a
-          data-sortby={title}
-          onClick={handleSortChange}
-          href={"/sort/" + title}
-        >
-          {title}
-        </a>
-      ) : (
-        title
-      )}
+      <span>
+        {sortInfo.sortFields.includes(title) ? (
+          <a data-sortby={title} onClick={handleSortChange} href={title}>
+            {title}
+          </a>
+        ) : (
+          title
+        )}
+      </span>
     </th>
   );
 }

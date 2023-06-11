@@ -14,11 +14,14 @@ export default {
 
   getHeaders: function (userHeaders, data) {
     if (userHeaders.length > 0)
-      return userHeaders.map((h) => (typeof h === "string" ? h : h.title));
+      return userHeaders.map((h) => (typeof h === "string" ? { title: h } : h));
 
-    if (data.length > 0) return Object.keys(data[0]);
+    if (data.length > 0)
+      return Object.keys(data[0]).map((k) => {
+        title: k;
+      });
 
-    return ["No headers defined"];
+    return [{ title: "No headers defined" }];
   },
 
   setUrlParam: function (params) {

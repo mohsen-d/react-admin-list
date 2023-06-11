@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 
 import { ListContext } from "../context";
 import { EmptyList } from "./emptyList.component";
+import { RowCommands } from "./command.component";
 
 export function Body({ list }) {
   const context = useContext(ListContext);
@@ -24,6 +25,8 @@ export function Body({ list }) {
 }
 
 function Row({ rowNumber, data }) {
+  const context = useContext(ListContext);
+
   const { _id, ...values } = data;
 
   const cells = Object.values(values);
@@ -36,16 +39,22 @@ function Row({ rowNumber, data }) {
         <RowCommands key="1" id={_id} />
       </td>
       {cells.map((c, i) => (
-        <Cell key={i} value={c} />
+        <Cell key={i} value={c} classes={context.headers[i].classes} />
       ))}
       {<MergedCell values={cells} id={_id} />}
     </tr>
   );
 }
 
-function Cell({ value }) {
+function Cell({ value, classes }) {
   return (
-    <td className="text-center d-none d-md-table-cell">{getContent(value)}</td>
+    <td
+      className={
+        "text-center d-none d-md-table-cell" + (classes ? " " + classes : "")
+      }
+    >
+      {getContent(value)}
+    </td>
   );
 }
 
