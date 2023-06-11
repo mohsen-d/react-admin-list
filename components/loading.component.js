@@ -24,6 +24,5 @@ export function Loading({ enable }) {
 export function getLoadingInfo(userLoading) {
   const result = {};
   Object.assign(result, defaultLoading, userLoading);
-  result.isLoading = false;
   return result;
 }

@@ -8,6 +8,8 @@ import {
   Body,
   Confirm,
   CurrentSearchInfo,
+  EmptyList,
+  listIsRealyEmpty,
   getLoadingInfo,
   getPaginationInfo,
   getSearchInfo,
@@ -193,32 +195,44 @@ export default ({
             options,
             currentSize,
             loadingtdColSpan,
+            loadingInfo,
           }}
         >
-          <Loading enable={loadingInfo.isLoading && loadingInfo.disableList} />
-          <Confirm
-            show={showConfirm}
-            onConfirm={handleConfirm}
-            onCancel={handleConfirmCancel}
-          />
-          <ListCommands customCommands={commands} />
-          <FormPlaceholder formToRender={formToRender} />
-          <CurrentSearchInfo />
-          <div>
-            <table
-              className={
-                "table" + (options.classes ? " " + options.classes : "")
-              }
-            >
-              <Header list={listHeaders} />
-              <Body list={data} />
-              {options.pagination && (
-                <Footer
-                  pagination={{ ...paginationInfo, handler: handlePageChange }}
-                />
-              )}
-            </table>
-          </div>
+          {listIsRealyEmpty(loadingInfo.isLoading, searchInfo.keyword, data) ? (
+            <EmptyList />
+          ) : (
+            <>
+              <Loading
+                enable={loadingInfo.isLoading && loadingInfo.disableList}
+              />
+              <Confirm
+                show={showConfirm}
+                onConfirm={handleConfirm}
+                onCancel={handleConfirmCancel}
+              />
+              <ListCommands customCommands={commands} />
+              <FormPlaceholder formToRender={formToRender} />
+              <CurrentSearchInfo />
+              <div>
+                <table
+                  className={
+                    "table" + (options.classes ? " " + options.classes : "")
+                  }
+                >
+                  <Header list={listHeaders} />
+                  <Body list={data} />
+                  {options.pagination && (
+                    <Footer
+                      pagination={{
+                        ...paginationInfo,
+                        handler: handlePageChange,
+                      }}
+                    />
+                  )}
+                </table>
+              </div>
+            </>
+          )}
         </ListContext.Provider>
       </div>
     </div>

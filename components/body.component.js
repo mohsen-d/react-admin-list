@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 
 import { ListContext } from "../context";
-
-import { RowCommands } from "./command.component";
+import { EmptyList } from "./emptyList.component";
 
 export function Body({ list }) {
   const context = useContext(ListContext);
@@ -10,8 +9,11 @@ export function Body({ list }) {
     <tbody>
       {list.length === 0 ? (
         <tr>
-          <td className="text-center" colSpan={context.loadingtdColSpan}>
-            Loading...
+          <td
+            className="text-center border-0 pt-5"
+            colSpan={context.loadingtdColSpan}
+          >
+            <EmptyList />
           </td>
         </tr>
       ) : (
