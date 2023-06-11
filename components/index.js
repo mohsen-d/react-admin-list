@@ -8,3 +8,4 @@ export * from "./loading.component";
 export * from "./pagination.component";
 export * from "./search.component";
 export * from "./sort.component";
+export * from "./emptyList.component";
