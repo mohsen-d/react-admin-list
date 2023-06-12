@@ -66,11 +66,11 @@ function getSortFields(headers, data) {
     const definedInHeaders = headers
       .filter((h) => h.canSortBy)
       .map((h) => h.title);
-    if (definedInHeaders.length > 0) return { sortFields: definedInHeaders };
+    if (definedInHeaders.length > 0) return definedInHeaders;
   }
 
   if (data.length > 0) {
-    return { sortFields: Object.keys(data[0]) };
+    return Object.keys(data[0]);
   }
 
   return [];

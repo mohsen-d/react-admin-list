@@ -44,7 +44,7 @@ export default ({
   edit,
   remove,
   pagination = {},
-  commands,
+  commands = [],
   options: customOptions,
 }) => {
   loadingtdColSpan = headers.length + 2;
