@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { defaultAdd, defaultEdit } from "./defaults";
+import { defaultAdd, defaultEdit, defaultOptions } from "./defaults";
 import { ListContext } from "./context";
 import utils from "./utils";
 import { useUpdateEffect } from "./hooks";
@@ -23,17 +23,6 @@ import {
 
 let loadingtdColSpan = 2;
 
-const options = {
-  classes: "",
-  multipleSelection: true,
-  edit: true,
-  remove: true,
-  new: true,
-  sort: true,
-  search: true,
-  pagination: true,
-};
-
 export default ({
   headers = [],
   data,
@@ -45,16 +34,15 @@ export default ({
   remove,
   pagination = {},
   commands = [],
-  options: customOptions,
+  options = {},
 }) => {
   loadingtdColSpan = headers.length + 2;
 
   const listHeaders = utils.getHeaders(headers, data);
+  const listOptions = Object.assign(defaultOptions, options);
   const handleAdd = add ?? defaultAdd;
   const handleEdit = edit ?? defaultEdit;
   const handleRemove = remove;
-
-  if (customOptions) Object.assign(options, customOptions);
 
   const [currentSize, setCurrentSize] = useState(utils.currentWindowWidth);
   const [selectedIds, setSelectedIds] = useState([]);
@@ -192,7 +180,7 @@ export default ({
             selectedIds,
             sortInfo,
             headers: listHeaders,
-            options,
+            options: listOptions,
             currentSize,
             loadingtdColSpan,
             loadingInfo,
@@ -216,12 +204,13 @@ export default ({
               <div>
                 <table
                   className={
-                    "table" + (options.classes ? " " + options.classes : "")
+                    "table" +
+                    (listOptions.classes ? " " + listOptions.classes : "")
                   }
                 >
                   <Header list={listHeaders} />
                   <Body list={data} />
-                  {options.pagination && (
+                  {listOptions.pagination && (
                     <Footer
                       pagination={{
                         ...paginationInfo,

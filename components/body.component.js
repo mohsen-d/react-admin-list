@@ -18,30 +18,36 @@ export function Body({ list }) {
           </td>
         </tr>
       ) : (
-        list.map((r, i) => <Row key={i} data={r} rowNumber={i + 1} />)
+        list.map((r, i) => (
+          <Row
+            key={i}
+            id={r[context.options.keyField]}
+            data={r}
+            rowNumber={i + 1}
+          />
+        ))
       )}
     </tbody>
   );
 }
 
-function Row({ rowNumber, data }) {
+function Row({ rowNumber, data, id }) {
   const context = useContext(ListContext);
 
-  const { _id, ...values } = data;
+  const cells = Object.values(data);
 
-  const cells = Object.values(values);
   return (
     <tr>
       <td>
         <div className="text-center d-block d-md-inline me-md-2">
           {rowNumber}
         </div>
-        <RowCommands key="1" id={_id} />
+        <RowCommands key="1" id={id ?? rowNumber} />
       </td>
       {cells.map((c, i) => (
         <Cell key={i} value={c} classes={context.headers[i].classes} />
       ))}
-      {<MergedCell values={cells} id={_id} />}
+      {<MergedCell values={cells} id={id ?? rowNumber} />}
     </tr>
   );
 }

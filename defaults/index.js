@@ -4,3 +4,4 @@ export * from "./pagination.default";
 export * from "./loading.default";
 export * from "./add.default";
 export * from "./edit.default";
+export * from "./options.default";
