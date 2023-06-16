@@ -10,7 +10,6 @@ import {
   CurrentSearchInfo,
   EmptyList,
   listIsRealyEmpty,
-  getLoadingInfo,
   getPaginationInfo,
   getSearchInfo,
   getSortInfo,
@@ -20,7 +19,7 @@ import {
   ListCommands,
   Loading,
 } from "./components";
-import { useConfirm, useCurrentSize, useSelection } from "./states";
+import { useConfirm, useCurrentSize, useLoading, useSelection } from "./states";
 
 let loadingtdColSpan = 2;
 
@@ -54,24 +53,18 @@ export default ({
 
   const confirm = useConfirm();
   const currentSize = useCurrentSize();
+  const [loadingInfo, setIsLoading] = useLoading(loading);
   const [selectedIds, handleSelection, handleSelectAll] = useSelection(
     data,
     listOptions.keyField
   );
   const [formToRender, setFormToRender] = useState();
-  const [loadingInfo, setLoadingInfo] = useState(getLoadingInfo(loading));
+
   const [sortInfo, setSortInfo] = useState(getSortInfo(sort, headers, data));
   const [searchInfo, setSearchInfo] = useState(getSearchInfo(search));
   const [paginationInfo, setPaginationInfo] = useState(
     getPaginationInfo(pagination, data)
   );
-
-  function setIsLoading(isLoading) {
-    setLoadingInfo((prev) => ({
-      ...prev,
-      isLoading,
-    }));
-  }
 
   async function handleSortChange(e) {
     e.preventDefault();
