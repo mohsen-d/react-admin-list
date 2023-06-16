@@ -20,7 +20,7 @@ import {
   ListCommands,
   Loading,
 } from "./components";
-import { useCurrentSize, useSelection } from "./states";
+import { useConfirm, useCurrentSize, useSelection } from "./states";
 
 let loadingtdColSpan = 2;
 
@@ -52,14 +52,13 @@ export default ({
       utils.makeStickyOnScroll(stickyElmsRef);
     }, []);
 
+  const confirm = useConfirm();
   const currentSize = useCurrentSize();
   const [selectedIds, handleSelection, handleSelectAll] = useSelection(
     data,
     listOptions.keyField
   );
   const [formToRender, setFormToRender] = useState();
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [handleConfirm, setHandleConfirm] = useState(() => () => {});
   const [loadingInfo, setLoadingInfo] = useState(getLoadingInfo(loading));
   const [sortInfo, setSortInfo] = useState(getSortInfo(sort, headers, data));
   const [searchInfo, setSearchInfo] = useState(getSearchInfo(search));
@@ -124,15 +123,6 @@ export default ({
     if (formToRender === "search") setFormToRender("");
   }, [searchInfo]);
 
-  function handleConfirmCancel() {
-    clearConfirmInfo();
-  }
-
-  function clearConfirmInfo() {
-    setShowConfirm(false);
-    setHandleConfirm(() => () => {});
-  }
-
   async function runHandler(
     needsConfirm = true,
     handlerName,
@@ -140,9 +130,9 @@ export default ({
     ...args
   ) {
     if (needsConfirm) {
-      setShowConfirm(true);
-      setHandleConfirm(() => () => {
-        clearConfirmInfo();
+      confirm.setShow(true);
+      confirm.setHandler(() => () => {
+        confirm.clear();
         runHandler(false, handlerName, handler, ...args);
       });
       return;
@@ -192,9 +182,9 @@ export default ({
                 enable={loadingInfo.isLoading && loadingInfo.disableList}
               />
               <Confirm
-                show={showConfirm}
-                onConfirm={handleConfirm}
-                onCancel={handleConfirmCancel}
+                show={confirm.show}
+                onConfirm={confirm.handler}
+                onCancel={confirm.cancel}
               />
 
               <div ref={stickyElmsRef} data-sticky-classes="bg-body z-3 py-1">
