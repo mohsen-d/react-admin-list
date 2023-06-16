@@ -13,7 +13,11 @@ export function Header({ list }) {
 
   return (
     <thead>
-      <tr className="d-none d-md-table-row">
+      <tr
+        className="d-none d-md-table-row"
+        ref={context.stickyElmsRef}
+        data-sticky-classes="table-light"
+      >
         <th className="col-md-2">
           <span className="me-md-2">#</span>
           {context.options.multipleSelection && (
@@ -34,9 +38,11 @@ export function Header({ list }) {
 
 function HeaderCell({ title, classes }) {
   const { sortInfo, handleSortChange } = useContext(ListContext);
+
   const isCurrentSortField = title === sortInfo.sortBy;
+
   return (
-    <th className={"text-center" + (classes ? " " + classes : "")}>
+    <th className={"text-center " + (classes ?? "")}>
       {isCurrentSortField ? (
         sortInfo.sortDirection === "1" ? (
           <span className="text-secondary">&#8675; </span>

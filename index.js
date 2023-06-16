@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { defaultAdd, defaultEdit, defaultOptions } from "./defaults";
 import { ListContext } from "./context";
 import utils from "./utils";
-import { useUpdateEffect } from "./hooks";
+import { useUpdateEffect, useMultiRef } from "./hooks";
 import {
   Body,
   Confirm,
@@ -43,6 +43,13 @@ export default ({
   const handleAdd = add ?? defaultAdd;
   const handleEdit = edit ?? defaultEdit;
   const handleRemove = remove;
+
+  const stickyElmsRef = useMultiRef();
+
+  if (listOptions.stickyTop)
+    useEffect(() => {
+      utils.makeStickyOnScroll(stickyElmsRef);
+    }, []);
 
   const [currentSize, setCurrentSize] = useState(utils.currentWindowWidth);
   const [selectedIds, setSelectedIds] = useState([]);
@@ -184,6 +191,7 @@ export default ({
             currentSize,
             loadingtdColSpan,
             loadingInfo,
+            stickyElmsRef,
           }}
         >
           {listIsRealyEmpty(loadingInfo.isLoading, searchInfo.keyword, data) ? (
@@ -198,9 +206,13 @@ export default ({
                 onConfirm={handleConfirm}
                 onCancel={handleConfirmCancel}
               />
-              <ListCommands customCommands={commands} />
-              <FormPlaceholder formToRender={formToRender} />
-              <CurrentSearchInfo />
+
+              <div ref={stickyElmsRef} data-sticky-classes="bg-body z-3 py-1">
+                <ListCommands customCommands={commands} />
+                <FormPlaceholder formToRender={formToRender} />
+                <CurrentSearchInfo />
+              </div>
+
               <div>
                 <table
                   className={

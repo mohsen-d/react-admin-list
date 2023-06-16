@@ -8,4 +8,5 @@ export const defaultOptions = {
   search: true,
   pagination: true,
   keyField: "_id",
+  stickyTop: true,
 };

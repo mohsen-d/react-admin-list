@@ -1,13 +1,6 @@
 export default {
   watchWindowWidth: function (callback) {
-    const ro = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        const cr = entry.contentRect;
-        callback(cr.width);
-      }
-    });
-
-    ro.observe(document.body);
+    wtachElementResize(document.body, "width", callback);
   },
 
   currentWindowWidth: document.body.clientWidth,
@@ -39,4 +32,58 @@ export default {
       window.history.pushState({ path: newUrl }, "", newUrl);
     }
   },
+
+  makeStickyOnScroll: function (ref) {
+    let classes = "position-sticky";
+    let elmClasses;
+
+    function justify(elm, offset) {
+      if (!elm.classList.contains("position-sticky")) {
+        elm.classList.add(...elmClasses.split(" "));
+      }
+      elm.style.top = offset + "px";
+    }
+
+    function clear(elm) {
+      if (elm.classList.contains("position-sticky")) {
+        elm.classList.remove(...elmClasses.split(" "));
+      }
+    }
+
+    window.addEventListener("scroll", (e) => {
+      ref.current.forEach((elm, i, elms) => {
+        const prevElmRect = elms[i - 1]?.getBoundingClientRect() ?? {
+          top: 0,
+          height: 0,
+        };
+
+        const offset = prevElmRect.height + prevElmRect.top;
+
+        elmClasses = `${classes} ${
+          elm.attributes["data-sticky-classes"]?.value ?? ""
+        }`.trim();
+
+        const { top } = elm.getBoundingClientRect();
+
+        if (top <= window.scrollY) {
+          top !== offset && justify(elm, offset);
+        } else {
+          clear(elm);
+        }
+      });
+    });
+  },
 };
+
+function wtachElementResize(elms, prop, callback) {
+  const ro = new ResizeObserver((entries) => {
+    for (let entry of entries) {
+      const cr = entry.contentRect;
+      callback(cr[prop]);
+    }
+  });
+
+  Array.isArray(elms)
+    ? elms.forEach((elm) => ro.observe(elm))
+    : ro.observe(elms);
+}
