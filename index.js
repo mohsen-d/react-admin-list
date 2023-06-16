@@ -23,6 +23,7 @@ import {
   useConfirm,
   useCurrentSize,
   useLoading,
+  usePagination,
   useSelection,
   useSort,
 } from "./states";
@@ -61,6 +62,7 @@ export default ({
   const currentSize = useCurrentSize();
   const [formToRender, setFormToRender] = useState();
   const [loadingInfo, setIsLoading] = useLoading(loading);
+  const [paginationInfo, handlePageChange] = usePagination(pagination, data);
   const [selectedIds, handleSelection, handleSelectAll] = useSelection(
     data,
     listOptions.keyField
@@ -68,22 +70,12 @@ export default ({
   const [sortInfo, handleSortChange] = useSort(sort, headers, data);
 
   const [searchInfo, setSearchInfo] = useState(getSearchInfo(search));
-  const [paginationInfo, setPaginationInfo] = useState(
-    getPaginationInfo(pagination, data)
-  );
 
   useUpdateEffect(() => {
     runHandler(false, "sort", sortInfo.handler, sortInfo);
 
     setFormToRender("");
   }, [sortInfo]);
-
-  function handlePageChange(p) {
-    setPaginationInfo((prev) => ({
-      ...prev,
-      currentPage: p,
-    }));
-  }
 
   useUpdateEffect(() => {
     runHandler(
