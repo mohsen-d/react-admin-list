@@ -36,8 +36,6 @@ export default ({
   commands = [],
   options = {},
 }) => {
-  loadingtdColSpan = headers.length + 2;
-
   const listHeaders = utils.getHeaders(headers, data);
   const listOptions = Object.assign(defaultOptions, options);
   const handleAdd = add ?? defaultAdd;
@@ -45,6 +43,8 @@ export default ({
   const handleRemove = remove;
 
   const stickyElmsRef = useMultiRef();
+
+  loadingtdColSpan = listHeaders.length + 2;
 
   if (listOptions.stickyTop)
     useEffect(() => {
