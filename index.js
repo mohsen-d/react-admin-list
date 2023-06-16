@@ -10,9 +10,6 @@ import {
   CurrentSearchInfo,
   EmptyList,
   listIsRealyEmpty,
-  getPaginationInfo,
-  getSearchInfo,
-  getSortInfo,
   Footer,
   FormPlaceholder,
   Header,
@@ -46,19 +43,14 @@ export default ({
 }) => {
   const listHeaders = utils.getHeaders(headers, data);
   const listOptions = Object.assign(defaultOptions, options);
+
   const handleAdd = add ?? defaultAdd;
   const handleEdit = edit ?? defaultEdit;
   const handleRemove = remove;
 
-  const stickyElmsRef = useMultiRef();
-
   loadingtdColSpan = listHeaders.length + 2;
 
-  if (listOptions.stickyTop)
-    useEffect(() => {
-      utils.makeStickyOnScroll(stickyElmsRef);
-    }, []);
-
+  const stickyElmsRef = useMultiRef();
   const confirm = useConfirm();
   const currentSize = useCurrentSize();
   const [formToRender, setFormToRender] = useState();
@@ -70,6 +62,11 @@ export default ({
     listOptions.keyField
   );
   const [sortInfo, handleSortChange] = useSort(sort, headers, data);
+
+  if (listOptions.stickyTop)
+    useEffect(() => {
+      utils.makeStickyOnScroll(stickyElmsRef);
+    }, []);
 
   useUpdateEffect(() => {
     runHandler(false, "sort", sortInfo.handler, sortInfo);
@@ -116,9 +113,6 @@ export default ({
 
   return (
     <div className="row">
-      <h2 className="col-12 col-lg-8 offset-lg-2 mb-2 text-info text-capitalize">
-        List
-      </h2>
       <div className="col-12 col-lg-8 offset-lg-2 position-relative">
         <ListContext.Provider
           value={{
