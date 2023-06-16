@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import utils from "../utils/";
 import { defaultPagination } from "../defaults";
-import styles from "../assets/list.style.css";
+import "../assets/list.style.css";
 
 export function Pagination({
   totalRecords,
@@ -131,9 +131,7 @@ function PaginationDetails({
   const output = `Page ${currentPage} of ${numberOfPages} - Records ${fromRecord} to ${toRecord} of ${totalRecords}`;
 
   return (
-    <div
-      className={styles.pagination_details + " text-secondary text-center mb-2"}
-    >
+    <div className="pagination_details text-secondary text-center mb-2">
       {output}
     </div>
   );

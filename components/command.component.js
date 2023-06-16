@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ListContext } from "../context";
 
-import styles from "../assets/list.style.css";
+import "../assets/list.style.css";
 
 export function Command({
   title,
@@ -144,7 +144,7 @@ export function RowCommands({ id }) {
           <input
             id={id}
             type="checkbox"
-            className={styles.form_check_input + " form-check-input"}
+            className="form_check_input form-check-input"
             onChange={context.handleSelection}
           />
         )}

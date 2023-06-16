@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { createPortal } from "react-dom";
 import { ListContext } from "../context";
 
-import styles from "../assets/list.style.css";
+import "../assets/list.style.css";
 
 export function Confirm({ show, onConfirm, onCancel }) {
   const context = useContext(ListContext);
@@ -10,12 +10,7 @@ export function Confirm({ show, onConfirm, onCancel }) {
 
   return show
     ? createPortal(
-        <div
-          className={
-            styles.loading +
-            " d-flex justify-content-center align-items-center bg-body position-absolute top-0 start-0 w-100 h-100"
-          }
-        >
+        <div className="loading  d-flex justify-content-center align-items-center bg-body position-absolute top-0 start-0 w-100 h-100">
           <div
             className={
               modalWidth +
