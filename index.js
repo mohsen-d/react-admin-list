@@ -20,6 +20,7 @@ import {
   ListCommands,
   Loading,
 } from "./components";
+import { useCurrentSize, useSelection } from "./states";
 
 let loadingtdColSpan = 2;
 
@@ -51,8 +52,11 @@ export default ({
       utils.makeStickyOnScroll(stickyElmsRef);
     }, []);
 
-  const [currentSize, setCurrentSize] = useState(utils.currentWindowWidth);
-  const [selectedIds, setSelectedIds] = useState([]);
+  const currentSize = useCurrentSize();
+  const [selectedIds, handleSelection, handleSelectAll] = useSelection(
+    data,
+    listOptions.keyField
+  );
   const [formToRender, setFormToRender] = useState();
   const [showConfirm, setShowConfirm] = useState(false);
   const [handleConfirm, setHandleConfirm] = useState(() => () => {});
@@ -63,25 +67,11 @@ export default ({
     getPaginationInfo(pagination, data)
   );
 
-  utils.watchWindowWidth(setCurrentSize);
-
   function setIsLoading(isLoading) {
     setLoadingInfo((prev) => ({
       ...prev,
       isLoading,
     }));
-  }
-
-  function handleSelection(e) {
-    setSelectedIds((currentIds) =>
-      e.target.checked
-        ? [...currentIds, e.target.id]
-        : currentIds.filter((i) => i !== e.target.id)
-    );
-  }
-
-  function handleSelectAll(e) {
-    setSelectedIds(e.target.checked ? data.map((d) => d._id) : []);
   }
 
   async function handleSortChange(e) {
