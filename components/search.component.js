@@ -39,36 +39,36 @@ export function Search() {
 export function CurrentSearchInfo() {
   const context = useContext(ListContext);
 
-  return (
+  return context.searchInfo.keyword && context.searchInfo.keyword.length > 0 ? (
     <div className="my-3 mt-lg-0 position-relative">
-      {context.searchInfo.keyword && context.searchInfo.keyword.length > 0 && (
-        <div className="bg-secondary-subtle p-2 d-flex">
-          <div className="flex-grow-1">
-            Filtered by: {context.searchInfo.keyword}
-          </div>
-          <div className="me-2">
+      <div className="bg-secondary-subtle p-2 d-flex">
+        <div className="flex-grow-1">
+          Filtered by: {context.searchInfo.keyword}
+        </div>
+        <div className="me-2">
+          <a
+            role="button"
+            className="text-success"
+            onClick={() => context.handleNewSearch("")}
+          >
+            clear
+          </a>
+        </div>
+        <div className="d-lg-none">
+          {context.options.search && (
             <a
               role="button"
-              className="text-success"
-              onClick={() => context.handleNewSearch("")}
+              className="text-primary"
+              onClick={() => context.renderForm("search")}
             >
-              clear
+              another search
             </a>
-          </div>
-          <div className="d-lg-none">
-            {context.options.search && (
-              <a
-                role="button"
-                className="text-primary"
-                onClick={() => context.renderForm("search")}
-              >
-                another search
-              </a>
-            )}
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
+  ) : (
+    ""
   );
 }
 
