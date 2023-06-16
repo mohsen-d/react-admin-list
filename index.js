@@ -24,6 +24,7 @@ import {
   useCurrentSize,
   useLoading,
   usePagination,
+  useSearch,
   useSelection,
   useSort,
 } from "./states";
@@ -63,13 +64,12 @@ export default ({
   const [formToRender, setFormToRender] = useState();
   const [loadingInfo, setIsLoading] = useLoading(loading);
   const [paginationInfo, handlePageChange] = usePagination(pagination, data);
+  const [searchInfo, handleNewSearch] = useSearch(search);
   const [selectedIds, handleSelection, handleSelectAll] = useSelection(
     data,
     listOptions.keyField
   );
   const [sortInfo, handleSortChange] = useSort(sort, headers, data);
-
-  const [searchInfo, setSearchInfo] = useState(getSearchInfo(search));
 
   useUpdateEffect(() => {
     runHandler(false, "sort", sortInfo.handler, sortInfo);
@@ -85,13 +85,6 @@ export default ({
       paginationInfo.currentPage
     );
   }, [paginationInfo]);
-
-  function handleNewSearch(keyword) {
-    setSearchInfo((prev) => ({
-      ...prev,
-      keyword: keyword,
-    }));
-  }
 
   useUpdateEffect(() => {
     runHandler(false, "search", searchInfo.handler, searchInfo.keyword);
