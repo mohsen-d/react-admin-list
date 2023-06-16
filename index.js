@@ -19,7 +19,13 @@ import {
   ListCommands,
   Loading,
 } from "./components";
-import { useConfirm, useCurrentSize, useLoading, useSelection } from "./states";
+import {
+  useConfirm,
+  useCurrentSize,
+  useLoading,
+  useSelection,
+  useSort,
+} from "./states";
 
 let loadingtdColSpan = 2;
 
@@ -53,34 +59,18 @@ export default ({
 
   const confirm = useConfirm();
   const currentSize = useCurrentSize();
+  const [formToRender, setFormToRender] = useState();
   const [loadingInfo, setIsLoading] = useLoading(loading);
   const [selectedIds, handleSelection, handleSelectAll] = useSelection(
     data,
     listOptions.keyField
   );
-  const [formToRender, setFormToRender] = useState();
+  const [sortInfo, handleSortChange] = useSort(sort, headers, data);
 
-  const [sortInfo, setSortInfo] = useState(getSortInfo(sort, headers, data));
   const [searchInfo, setSearchInfo] = useState(getSearchInfo(search));
   const [paginationInfo, setPaginationInfo] = useState(
     getPaginationInfo(pagination, data)
   );
-
-  async function handleSortChange(e) {
-    e.preventDefault();
-
-    let value = e.target.value || e.target.attributes["data-sortby"].value;
-    let key = e.target.id || "sortBy";
-
-    if (sortInfo.sortBy && value === sortInfo.sortBy) {
-      key = "sortDirection";
-      value = `${sortInfo.sortDirection * -1}`;
-    }
-
-    setSortInfo((prev) => {
-      return { ...prev, [key]: value };
-    });
-  }
 
   useUpdateEffect(() => {
     runHandler(false, "sort", sortInfo.handler, sortInfo);
