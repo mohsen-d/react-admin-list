@@ -39,7 +39,7 @@ function Row({ rowNumber, data, id }) {
   return (
     <tr>
       <td>
-        <div className="text-center d-block d-md-inline me-md-2">
+        <div className="row_index text-center d-block d-md-inline-block me-md-2">
           {rowNumber}
         </div>
         <RowCommands key="1" id={id ?? rowNumber} />

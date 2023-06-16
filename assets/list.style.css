@@ -2,7 +2,6 @@
   width: 1.5em !important;
   height: 1.5em !important;
 }
-
 .loading {
   z-index: 2000;
   --bs-bg-opacity: 0.7;
@@ -16,5 +15,8 @@
     width: 1em !important;
     height: 1em !important;
     margin-top: 7px !important;
+  }
+  .row_index {
+    width: 35px;
   }
 }
