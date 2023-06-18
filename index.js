@@ -132,7 +132,6 @@ export default ({
             options: listOptions,
             currentSize,
             loadingtdColSpan,
-            loadingInfo,
             stickyElmsRef,
           }}
         >
