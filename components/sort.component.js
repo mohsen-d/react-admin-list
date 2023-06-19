@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
-import { ListContext } from "../context";
+import { DynamicsContext, HandlersContext } from "../context";
 
 import { defaultSort } from "../defaults";
 
 export function Sort() {
-  const context = useContext(ListContext);
+  const { sortInfo, currentSize } = useContext(DynamicsContext);
+  const { handleSortChange } = useContext(HandlersContext);
 
   return (
     <div
       className={`d-flex flex-fill my-3 pe-lg-2${
-        context.currentSize >= 992 ? " border-end" : ""
+        currentSize >= 992 ? " border-end" : ""
       }`}
     >
       <div className="d-flex align-items-center text-center text-secondary px-1">
@@ -21,15 +22,15 @@ export function Sort() {
         <select
           id="sortBy"
           className="form-select"
-          onChange={context.handleSortChange}
-          value={context.sortInfo.sortBy}
+          onChange={handleSortChange}
+          value={sortInfo.sortBy}
         >
-          {context.sortInfo.sortBy === "" && (
+          {sortInfo.sortBy === "" && (
             <option key={-1} value="">
               Sort By
             </option>
           )}
-          {context.sortInfo.sortFields.map((f, i) => (
+          {sortInfo.sortFields.map((f, i) => (
             <option key={i} value={f}>
               {f}
             </option>
@@ -40,8 +41,8 @@ export function Sort() {
         <select
           id="sortDirection"
           className="form-select"
-          onChange={context.handleSortChange}
-          value={context.sortInfo.sortDirection}
+          onChange={handleSortChange}
+          value={sortInfo.sortDirection}
         >
           <option value="1">A &raquo; Z</option>
           <option value="-1">Z &raquo; A</option>

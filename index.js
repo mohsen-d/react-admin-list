@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { defaultAdd, defaultEdit, defaultOptions } from "./defaults";
-import { ListContext } from "./context";
+import { DynamicsContext, HandlersContext, StaticsContext } from "./context";
 import utils from "./utils";
 import { useUpdateEffect, useMultiRef } from "./hooks";
 import {
@@ -114,7 +114,7 @@ export default ({
   return (
     <div className="row">
       <div className="col-12 col-lg-8 offset-lg-2 position-relative">
-        <ListContext.Provider
+        <HandlersContext.Provider
           value={{
             handleSelection,
             handleSelectAll,
@@ -125,57 +125,74 @@ export default ({
             handleRemove,
             runHandler,
             renderForm: setFormToRender,
-            searchInfo,
-            selectedIds,
-            sortInfo,
-            headers: listHeaders,
-            options: listOptions,
-            currentSize,
-            loadingtdColSpan,
-            stickyElmsRef,
           }}
         >
-          {listIsRealyEmpty(loadingInfo.isLoading, searchInfo.keyword, data) ? (
-            <EmptyList />
-          ) : (
-            <>
-              <Loading
-                enable={loadingInfo.isLoading && loadingInfo.disableList}
-              />
-              <Confirm
-                show={confirm.show}
-                onConfirm={confirm.handler}
-                onCancel={confirm.cancel}
-              />
+          <StaticsContext.Provider
+            value={{
+              headers: listHeaders,
+              options: listOptions,
+              loadingtdColSpan,
+              stickyElmsRef,
+            }}
+          >
+            <DynamicsContext.Provider
+              value={{
+                searchInfo,
+                selectedIds,
+                sortInfo,
+                currentSize,
+              }}
+            >
+              {listIsRealyEmpty(
+                loadingInfo.isLoading,
+                searchInfo.keyword,
+                data
+              ) ? (
+                <EmptyList />
+              ) : (
+                <>
+                  <Loading
+                    enable={loadingInfo.isLoading && loadingInfo.disableList}
+                  />
+                  <Confirm
+                    show={confirm.show}
+                    onConfirm={confirm.handler}
+                    onCancel={confirm.cancel}
+                  />
 
-              <div ref={stickyElmsRef} data-sticky-classes="bg-body z-3 py-1">
-                <ListCommands customCommands={commands} />
-                <FormPlaceholder formToRender={formToRender} />
-                <CurrentSearchInfo />
-              </div>
+                  <div
+                    ref={stickyElmsRef}
+                    data-sticky-classes="bg-body z-3 py-1"
+                  >
+                    <ListCommands customCommands={commands} />
+                    <FormPlaceholder formToRender={formToRender} />
+                    <CurrentSearchInfo />
+                  </div>
 
-              <div>
-                <table
-                  className={
-                    "table" +
-                    (listOptions.classes ? " " + listOptions.classes : "")
-                  }
-                >
-                  <Header list={listHeaders} />
-                  <Body list={data} />
-                  {listOptions.pagination && (
-                    <Footer
-                      pagination={{
-                        ...paginationInfo,
-                        handler: handlePageChange,
-                      }}
-                    />
-                  )}
-                </table>
-              </div>
-            </>
-          )}
-        </ListContext.Provider>
+                  <div>
+                    <table
+                      className={
+                        "table" +
+                        (listOptions.classes ? " " + listOptions.classes : "")
+                      }
+                    >
+                      <Header list={listHeaders} />
+                      <Body list={data} />
+                      {listOptions.pagination && (
+                        <Footer
+                          pagination={{
+                            ...paginationInfo,
+                            handler: handlePageChange,
+                          }}
+                        />
+                      )}
+                    </table>
+                  </div>
+                </>
+              )}
+            </DynamicsContext.Provider>
+          </StaticsContext.Provider>
+        </HandlersContext.Provider>
       </div>
     </div>
   );

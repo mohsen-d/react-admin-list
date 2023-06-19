@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { ListContext } from "../context";
+import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
 
 import "../assets/list.style.css";
 
@@ -12,18 +12,19 @@ export function Command({
   needsLoading = true,
   needsConfirm = true,
 }) {
-  const context = useContext(ListContext);
+  const { selectedIds } = useContext(DynamicsContext);
+  const { runHandler } = useContext(HandlersContext);
 
   return (
     <button
       type="button"
       onClick={() =>
         needsLoading
-          ? context.runHandler(
+          ? runHandler(
               needsConfirm,
               title,
               handler,
-              listCommand ? context.selectedIds : null
+              listCommand ? selectedIds : null
             )
           : handler()
       }
@@ -57,28 +58,31 @@ export function Commands({ commands }) {
 }
 
 export function ListCommands({ customCommands }) {
-  const context = useContext(ListContext);
+  const { selectedIds } = useContext(DynamicsContext);
+  const { handleAdd, renderForm, handleRemove, handleEdit } =
+    useContext(HandlersContext);
+  const { options } = useContext(StaticsContext);
 
   return (
     <div>
-      <div className={context.selectedIds.length === 0 ? "d-inline" : "d-none"}>
-        {context.options.new && (
+      <div className={selectedIds.length === 0 ? "d-inline" : "d-none"}>
+        {options.new && (
           <Command
             title="new"
             icon="bi-plus"
             className="btn btn-outline-success me-1"
-            handler={context.handleAdd}
+            handler={handleAdd}
             listCommand={false}
             needsConfirm={false}
           />
         )}
 
-        {context.options.sort && (
+        {options.sort && (
           <Command
             icon="bi-sort-down"
             className="btn btn-outline-secondary me-1 d-lg-none"
             handler={() => {
-              context.renderForm((currentForm) =>
+              renderForm((currentForm) =>
                 currentForm === "sort" ? "" : "sort"
               );
             }}
@@ -88,12 +92,12 @@ export function ListCommands({ customCommands }) {
           />
         )}
 
-        {context.options.search && (
+        {options.search && (
           <Command
             icon="bi-search"
             className="btn btn-outline-secondary me-1 d-lg-none"
             handler={() => {
-              context.renderForm((currentForm) =>
+              renderForm((currentForm) =>
                 currentForm === "search" ? "" : "search"
               );
             }}
@@ -104,26 +108,24 @@ export function ListCommands({ customCommands }) {
         )}
       </div>
 
-      <div className={context.selectedIds.length === 0 ? "d-none" : "d-inline"}>
-        {context.options.remove && context.handleRemove && (
+      <div className={selectedIds.length === 0 ? "d-none" : "d-inline"}>
+        {options.remove && handleRemove && (
           <Command
             title="remove"
             icon="bi-x"
             className="btn btn-outline-danger me-1"
-            handler={context.handleRemove}
+            handler={handleRemove}
           />
         )}
 
-        {context.options.edit && (
+        {options.edit && (
           <Command
             title="edit"
             icon="bi-pencil"
             className={
-              context.selectedIds.length > 1
-                ? "d-none"
-                : "btn btn-outline-primary me-1"
+              selectedIds.length > 1 ? "d-none" : "btn btn-outline-primary me-1"
             }
-            handler={context.handleEdit}
+            handler={handleEdit}
             needsConfirm={false}
           />
         )}
@@ -135,40 +137,42 @@ export function ListCommands({ customCommands }) {
 }
 
 export function RowCommands({ id }) {
-  const context = useContext(ListContext);
+  const { handleSelection, handleEdit, handleRemove } =
+    useContext(HandlersContext);
+  const { options } = useContext(StaticsContext);
 
   return (
     <>
       <div className="d-block text-center d-md-inline me-md-2">
-        {context.options.multipleSelection && (
+        {options.multipleSelection && (
           <input
             id={id}
             type="checkbox"
             className="form_check_input form-check-input"
-            onChange={context.handleSelection}
+            onChange={handleSelection}
           />
         )}
       </div>
 
-      {context.options.edit && (
+      {options.edit && (
         <div className="d-none d-md-inline me-md-2">
           <Command
             title="edit"
             icon="bi-pencil-square"
             className="btn text-secondary p-0"
-            handler={() => context.handleEdit([id])}
+            handler={() => handleEdit([id])}
             needsConfirm={false}
           />
         </div>
       )}
 
-      {context.options.remove && context.handleRemove && (
+      {options.remove && handleRemove && (
         <div className="d-none d-md-inline">
           <Command
             title="remove"
             icon="bi-trash-fill"
             className="btn text-secondary p-0"
-            handler={() => context.handleRemove([id])}
+            handler={() => handleRemove([id])}
           />
         </div>
       )}

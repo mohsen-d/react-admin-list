@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
-import { ListContext } from "../context";
+import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
 
 export function Header({ list }) {
-  const context = useContext(ListContext);
+  const { handleSelectAll } = useContext(HandlersContext);
+  const { stickyElmsRef, options } = useContext(StaticsContext);
 
   function selectAll(e) {
     document.querySelectorAll(".form-check-input").forEach((ch) => {
       ch.checked = e.target.checked;
-      context.handleSelectAll(e);
+      handleSelectAll(e);
     });
   }
 
@@ -15,12 +16,12 @@ export function Header({ list }) {
     <thead>
       <tr
         className="d-none d-md-table-row"
-        ref={context.stickyElmsRef}
+        ref={stickyElmsRef}
         data-sticky-classes="table-light"
       >
         <th className="col-md-2">
           <span className="me-md-2">#</span>
-          {context.options.multipleSelection && (
+          {options.multipleSelection && (
             <input
               type="checkbox"
               className="form-check-input"
@@ -37,7 +38,8 @@ export function Header({ list }) {
 }
 
 function HeaderCell({ title, classes }) {
-  const { sortInfo, handleSortChange } = useContext(ListContext);
+  const { sortInfo } = useContext(DynamicsContext);
+  const { handleSortChange } = useContext(HandlersContext);
 
   const isCurrentSortField = title === sortInfo.sortBy;
 

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import { ListContext } from "../context";
+import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
 import { defaultSearch } from "../defaults";
 
 export function Search() {
-  const handleNewSearch = useContext(ListContext).handleNewSearch;
+  const { handleNewSearch } = useContext(HandlersContext);
 
   function handleKeyPress(e) {
     if (e.key === "Enter") handleNewSearch(e.target.value);
@@ -37,29 +37,29 @@ export function Search() {
 }
 
 export function CurrentSearchInfo() {
-  const context = useContext(ListContext);
+  const { searchInfo } = useContext(DynamicsContext);
+  const { handleNewSearch, renderForm } = useContext(HandlersContext);
+  const { options } = useContext(StaticsContext);
 
-  return context.searchInfo.keyword && context.searchInfo.keyword.length > 0 ? (
+  return searchInfo.keyword && searchInfo.keyword.length > 0 ? (
     <div className="my-3 mt-lg-0 position-relative">
       <div className="bg-secondary-subtle p-2 d-flex">
-        <div className="flex-grow-1">
-          Filtered by: {context.searchInfo.keyword}
-        </div>
+        <div className="flex-grow-1">Filtered by: {searchInfo.keyword}</div>
         <div className="me-2">
           <a
             role="button"
             className="text-success"
-            onClick={() => context.handleNewSearch("")}
+            onClick={() => handleNewSearch("")}
           >
             clear
           </a>
         </div>
         <div className="d-lg-none">
-          {context.options.search && (
+          {options.search && (
             <a
               role="button"
               className="text-primary"
-              onClick={() => context.renderForm("search")}
+              onClick={() => renderForm("search")}
             >
               another search
             </a>

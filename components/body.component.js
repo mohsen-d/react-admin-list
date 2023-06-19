@@ -1,27 +1,25 @@
 import React, { useContext } from "react";
 
-import { ListContext } from "../context";
+import { DynamicsContext, StaticsContext } from "../context";
 import { EmptyList } from "./emptyList.component";
 import { RowCommands } from "./command.component";
 
 export function Body({ list }) {
-  const context = useContext(ListContext);
+  const { options, loadingtdColSpan } = useContext(StaticsContext);
+
   return (
     <tbody>
       {list.length === 0 ? (
         <tr>
-          <td
-            className="text-center border-0 pt-5"
-            colSpan={context.loadingtdColSpan}
-          >
+          <td className="text-center border-0 pt-5" colSpan={loadingtdColSpan}>
             <EmptyList />
           </td>
         </tr>
       ) : (
         list.map((r, i) => (
           <Row
-            key={r[context.options.keyField]}
-            id={r[context.options.keyField]}
+            key={r[options.keyField]}
+            id={r[options.keyField]}
             data={r}
             rowNumber={i + 1}
           />
@@ -32,7 +30,7 @@ export function Body({ list }) {
 }
 
 function Row({ rowNumber, data, id }) {
-  const context = useContext(ListContext);
+  const { headers } = useContext(StaticsContext);
 
   const cells = Object.values(data);
 
@@ -45,7 +43,7 @@ function Row({ rowNumber, data, id }) {
         <RowCommands key="1" id={id ?? rowNumber} />
       </td>
       {cells.map((c, i) => (
-        <Cell key={i} value={c} classes={context.headers[i].classes} />
+        <Cell key={i} value={c} classes={headers[i].classes} />
       ))}
       {<MergedCell values={cells} id={id ?? rowNumber} />}
     </tr>
@@ -65,7 +63,8 @@ function Cell({ value, classes }) {
 }
 
 function MergedCell({ values }) {
-  const { sortInfo, headers, loadingtdColSpan } = useContext(ListContext);
+  const { headers, loadingtdColSpan } = useContext(StaticsContext);
+  const { sortInfo } = useContext(DynamicsContext);
 
   return (
     <td colSpan={loadingtdColSpan - 3} className="d-table-cell d-md-none">

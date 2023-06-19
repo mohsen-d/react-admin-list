@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { createPortal } from "react-dom";
-import { ListContext } from "../context";
+import { DynamicsContext } from "../context";
 
 import "../assets/list.style.css";
 
 export function Confirm({ show, onConfirm, onCancel }) {
-  const context = useContext(ListContext);
-  const modalWidth = getModalWidth(context.currentSize);
+  const { currentSize } = useContext(DynamicsContext);
+  const modalWidth = getModalWidth(currentSize);
 
   return show
     ? createPortal(

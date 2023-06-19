@@ -1,17 +1,19 @@
 import React, { useContext } from "react";
 import { Command } from "./command.component";
-import { ListContext } from "../context";
+import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
 
 export function EmptyList() {
-  const context = useContext(ListContext);
+  const { loadingInfo, searchInfo } = useContext(DynamicsContext);
+  const { options } = useContext(StaticsContext);
+  const { handleAdd } = useContext(HandlersContext);
 
-  if (context.loadingInfo.isLoading) return <span>Loading...</span>;
-  if (context.searchInfo.keyword !== "")
+  if (loadingInfo.isLoading) return <span>Loading...</span>;
+  if (searchInfo.keyword !== "")
     return (
       <span>
         Found no match for keyword{" "}
         <i>
-          <b>{context.searchInfo.keyword}</b>
+          <b>{searchInfo.keyword}</b>
         </i>
       </span>
     );
@@ -21,11 +23,11 @@ export function EmptyList() {
       <span>
         <b>No records yet. </b>
       </span>
-      {context.options.new && (
+      {options.new && (
         <Command
           title="Create Your First"
           className="btn btn-success pt-1"
-          handler={context.handleAdd}
+          handler={handleAdd}
           listCommand={false}
           needsConfirm={false}
         />
