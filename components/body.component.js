@@ -20,7 +20,7 @@ export function Body({ list }) {
       ) : (
         list.map((r, i) => (
           <Row
-            key={i}
+            key={r[context.options.keyField]}
             id={r[context.options.keyField]}
             data={r}
             rowNumber={i + 1}
