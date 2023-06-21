@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import utils from "../utils/";
+import React, { useContext, useState } from "react";
+
 import { defaultPagination } from "../defaults";
+import { DynamicsContext } from "../context";
 import "../assets/list.style.css";
 
 export function Pagination({
@@ -9,16 +10,13 @@ export function Pagination({
   currentPage,
   handler,
 }) {
-  const [currentSize, setCurrentSize] = useState(utils.currentWindowWidth);
-  utils.watchWindowWidth(setCurrentSize);
-
+  console.log("rendered Paging");
+  const { currentSize } = useContext(DynamicsContext);
   const numberOfPages = Math.ceil(totalRecords / recordsPerPage);
   const numericPages =
     currentPage > 1
       ? [currentPage - 1, currentPage, currentPage + 1]
       : [1, 2, 3];
-
-  console.log(numericPages);
 
   function handlePageChange(e) {
     handler(parseInt(e.target.attributes["data-page"].value));

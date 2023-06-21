@@ -1,6 +1,12 @@
 export default {
   watchWindowWidth: function (callback) {
-    wtachElementResize(document.body, "width", callback);
+    window.addEventListener(
+      "resize",
+      function () {
+        callback(document.body.clientWidth);
+      },
+      true
+    );
   },
 
   currentWindowWidth: document.body.clientWidth,
@@ -74,16 +80,3 @@ export default {
     });
   },
 };
-
-function wtachElementResize(elms, prop, callback) {
-  const ro = new ResizeObserver((entries) => {
-    for (let entry of entries) {
-      const cr = entry.contentRect;
-      callback(cr[prop]);
-    }
-  });
-
-  Array.isArray(elms)
-    ? elms.forEach((elm) => ro.observe(elm))
-    : ro.observe(elms);
-}

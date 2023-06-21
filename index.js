@@ -15,6 +15,7 @@ import {
   Header,
   ListCommands,
   Loading,
+  Pagination,
 } from "./components";
 import {
   useConfirm,
@@ -41,6 +42,7 @@ export default ({
   commands = [],
   options = {},
 }) => {
+  console.log("list rendered");
   const listHeaders = utils.getHeaders(headers, data);
   const listOptions = Object.assign(defaultOptions, options);
 
@@ -170,21 +172,16 @@ export default ({
                   </div>
 
                   <div>
-                    <table
-                      className={
-                        "table" +
-                        (listOptions.classes ? " " + listOptions.classes : "")
-                      }
-                    >
+                    <table className={"table " + listOptions.classes}>
                       <Header list={listHeaders} />
                       <Body list={data} />
                       {listOptions.pagination && (
-                        <Footer
-                          pagination={{
-                            ...paginationInfo,
-                            handler: handlePageChange,
-                          }}
-                        />
+                        <Footer>
+                          <Pagination
+                            {...paginationInfo}
+                            handler={handlePageChange}
+                          />
+                        </Footer>
                       )}
                     </table>
                   </div>
