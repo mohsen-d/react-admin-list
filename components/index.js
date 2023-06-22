@@ -5,6 +5,7 @@ export * from "./emptyList.component";
 export * from "./footer.component";
 export * from "./formPlaceholder.component";
 export * from "./header.component";
+export * from "./list.component";
 export * from "./loading.component";
 export * from "./pagination.component";
 export * from "./search.component";
