@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
+import { SortDirectionIcon } from "./sortDirectionIcon.component";
 
 export function Header({ list }) {
   const { handleSelectAll } = useContext(HandlersContext);
@@ -41,19 +42,9 @@ function HeaderCell({ title, classes }) {
   const { sortInfo } = useContext(DynamicsContext);
   const { handleSortChange } = useContext(HandlersContext);
 
-  const isCurrentSortField = title === sortInfo.sortBy;
-
   return (
     <th className={"text-center " + (classes ?? "")}>
-      {isCurrentSortField ? (
-        sortInfo.sortDirection === "1" ? (
-          <span className="text-secondary">&#8675; </span>
-        ) : (
-          <span className="text-secondary">&#8673; </span>
-        )
-      ) : (
-        <span className="pe-2">&nbsp;</span>
-      )}
+      <SortDirectionIcon fieldTitle={title} />
       <span>
         {sortInfo.sortFields.includes(title) ? (
           <a data-sortby={title} onClick={handleSortChange} href={title}>

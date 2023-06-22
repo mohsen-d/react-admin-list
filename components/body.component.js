@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 
-import { DynamicsContext, StaticsContext } from "../context";
+import { StaticsContext } from "../context";
 import { EmptyList } from "./emptyList.component";
 import { RowCommands } from "./command.component";
+import { SortDirectionIcon } from "./sortDirectionIcon.component";
 
 export function Body({ list }) {
   const { options, loadingtdColSpan } = useContext(StaticsContext);
@@ -64,22 +65,12 @@ function Cell({ value, classes }) {
 
 function MergedCell({ values }) {
   const { headers, loadingtdColSpan } = useContext(StaticsContext);
-  const { sortInfo } = useContext(DynamicsContext);
 
   return (
     <td colSpan={loadingtdColSpan - 3} className="d-table-cell d-md-none">
       {values.map((v, i) => (
         <div key={i}>
-          {headers[i].title === sortInfo.sortBy &&
-          sortInfo.sortDirection !== "" ? (
-            sortInfo.sortDirection === "1" ? (
-              <span className="text-secondary">&#8675; </span>
-            ) : (
-              <span className="text-secondary">&#8673; </span>
-            )
-          ) : (
-            <span className="pe-2">&nbsp;</span>
-          )}
+          <SortDirectionIcon fieldTitle={headers[i].title} />
           {getContent(v, headers[i].title)}
         </div>
       ))}

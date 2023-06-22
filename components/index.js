@@ -1,6 +1,7 @@
 export * from "./body.component";
 export * from "./command.component";
 export * from "./confirm.component";
+export * from "./emptyList.component";
 export * from "./footer.component";
 export * from "./formPlaceholder.component";
 export * from "./header.component";
@@ -8,4 +9,4 @@ export * from "./loading.component";
 export * from "./pagination.component";
 export * from "./search.component";
 export * from "./sort.component";
-export * from "./emptyList.component";
+export * from "./sortDirectionIcon.component";
