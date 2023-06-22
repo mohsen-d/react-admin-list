@@ -142,8 +142,8 @@ export function RowCommands({ id }) {
   const { options } = useContext(StaticsContext);
 
   return (
-    <>
-      <div className="d-block text-center d-md-inline me-md-2">
+    <div className="d-md-flex justify-content-between flex-grow-1">
+      <div className="d-block text-center d-md-inline">
         {options.multipleSelection && (
           <input
             id={id}
@@ -155,7 +155,7 @@ export function RowCommands({ id }) {
       </div>
 
       {options.edit && (
-        <div className="d-none d-md-inline me-md-2">
+        <div className="d-none d-md-inline">
           <Command
             title="edit"
             icon="bi-pencil-square"
@@ -176,6 +176,6 @@ export function RowCommands({ id }) {
           />
         </div>
       )}
-    </>
+    </div>
   );
 }

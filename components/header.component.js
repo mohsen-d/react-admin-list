@@ -21,7 +21,7 @@ export function Header({ list }) {
         data-sticky-classes="table-light"
       >
         <th className="col-md-2">
-          <span className="me-md-2">#</span>
+          <span className="row_index text-center d-md-inline-block">#</span>
           {options.multipleSelection && (
             <input
               type="checkbox"
