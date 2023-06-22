@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
-import { defaultPagination } from "../defaults";
 import { DynamicsContext } from "../context";
 import "../assets/list.style.css";
 
@@ -133,14 +132,4 @@ function PaginationDetails({
       {output}
     </div>
   );
-}
-
-export function getPaginationInfo(userPagination, data) {
-  const result = {};
-
-  Object.assign(result, defaultPagination, userPagination);
-
-  if (result.totalRecords < 1) result.totalRecords = data.length;
-
-  return result;
 }

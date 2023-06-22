@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getLoadingInfo } from "../components";
+import { getLoadingInfo } from "../utils";
 
 export function useLoading(loading) {
   const [loadingInfo, setLoadingInfo] = useState(getLoadingInfo(loading));

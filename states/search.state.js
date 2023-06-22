@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getSearchInfo } from "../components";
+import { getSearchInfo } from "../utils";
 
 export function useSearch(search) {
   const [searchInfo, setSearchInfo] = useState(getSearchInfo(search));

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
-import { defaultSearch } from "../defaults";
 
 export function Search() {
   const { handleNewSearch } = useContext(HandlersContext);
@@ -70,10 +69,4 @@ export function CurrentSearchInfo() {
   ) : (
     ""
   );
-}
-
-export function getSearchInfo(userSearch) {
-  const result = {};
-  Object.assign(result, defaultSearch, userSearch);
-  return result;
 }

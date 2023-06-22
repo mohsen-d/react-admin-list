@@ -1,6 +1,5 @@
 import React from "react";
 import "../assets/list.style.css";
-import { defaultLoading } from "../defaults";
 
 export function Loading({ enable }) {
   return enable ? (
@@ -14,10 +13,4 @@ export function Loading({ enable }) {
   ) : (
     ""
   );
-}
-
-export function getLoadingInfo(userLoading) {
-  const result = {};
-  Object.assign(result, defaultLoading, userLoading);
-  return result;
 }

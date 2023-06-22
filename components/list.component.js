@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import { defaultAdd, defaultEdit, defaultOptions } from "../defaults";
 import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
-import utils from "../utils";
+import * as utils from "../utils";
 import { useUpdateEffect, useMultiRef } from "../hooks";
 import {
   Body,
   Confirm,
   CurrentSearchInfo,
   EmptyList,
-  listIsRealyEmpty,
   Footer,
   FormPlaceholder,
   Header,
@@ -146,7 +145,7 @@ export function List({
                 currentSize,
               }}
             >
-              {listIsRealyEmpty(
+              {utils.listIsRealyEmpty(
                 loadingInfo.isLoading,
                 searchInfo.keyword,
                 data

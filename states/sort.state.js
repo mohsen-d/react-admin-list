@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getSortInfo } from "../components";
+import { getSortInfo } from "../utils";
 
 export function useSort(sort, headers, data) {
   const [sortInfo, setSortInfo] = useState(getSortInfo(sort, headers, data));

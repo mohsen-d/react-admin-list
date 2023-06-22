@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getPaginationInfo } from "../components";
+import { getPaginationInfo } from "../utils";
 
 export function usePagination(pagination, data) {
   const [paginationInfo, setPaginationInfo] = useState(
