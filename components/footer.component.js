@@ -1,11 +1,7 @@
 import React, { useContext } from "react";
 import { StaticsContext } from "../context";
 
-import { Pagination } from "./pagination.component";
-
 export function Footer({ children }) {
-  console.log("rendered Footer");
-
   const { loadingtdColSpan } = useContext(StaticsContext);
   return (
     <tfoot>

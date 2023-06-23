@@ -42,7 +42,6 @@ export function List({
   options = {},
   children,
 }) {
-  console.log("list rendered");
   const listHeaders = utils.getHeaders(headers, data);
   const listOptions = Object.assign(defaultOptions, options);
 

@@ -9,7 +9,6 @@ export function Pagination({
   currentPage,
   handler,
 }) {
-  console.log("rendered Paging");
   const { currentSize } = useContext(DynamicsContext);
   const numberOfPages = Math.ceil(totalRecords / recordsPerPage);
   const numericPages =
