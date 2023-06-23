@@ -48,10 +48,10 @@ export function CommandGroup({ commands }) {
 export function Commands({ commands }) {
   const output = [];
 
-  commands.forEach((c) => {
+  commands.forEach((c, i) => {
     Array.isArray(c)
-      ? output.push(<CommandGroup commands={c} />)
-      : output.push(<Command {...c} />);
+      ? output.push(<CommandGroup key={i} commands={c} />)
+      : output.push(<Command key={i} {...c} />);
   });
 
   return output;
