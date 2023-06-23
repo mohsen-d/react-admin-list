@@ -12,16 +12,17 @@ export function watchWindowWidth(callback) {
 
 export function setUrlParam(params) {
   if (history.pushState) {
-    var currentParams = new URLSearchParams(window.location.search);
+    const currentParams = new URLSearchParams(window.location.search);
     params.forEach((p) => {
-      currentParams.set(p.name, p.value);
+      p.value
+        ? currentParams.set(p.name, p.value)
+        : currentParams.delete(p.name);
     });
 
-    var newUrl =
-      window.location.origin +
-      window.location.pathname +
-      "?" +
-      currentParams.toString();
+    let newUrl = window.location.origin + window.location.pathname;
+
+    if (currentParams.size > 0) newUrl += "?" + currentParams.toString();
+
     window.history.pushState({ path: newUrl }, "", newUrl);
   }
 }

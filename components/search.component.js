@@ -1,5 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
+
+function reset() {
+  const listSearchBox = document.querySelector("#searchBox");
+  listSearchBox.value = "";
+  listSearchBox.focus();
+}
 
 export function Search() {
   const { handleNewSearch } = useContext(HandlersContext);
@@ -11,12 +17,6 @@ export function Search() {
   useEffect(() => {
     reset();
   }, []);
-
-  function reset() {
-    const elm = document.querySelector("#searchBox");
-    elm.value = "";
-    elm.focus();
-  }
 
   return (
     <div className="my-3 ps-lg-2 position-relative flex-fill">
@@ -48,7 +48,10 @@ export function CurrentSearchInfo() {
           <a
             role="button"
             className="text-success"
-            onClick={() => handleNewSearch("")}
+            onClick={() => {
+              reset();
+              handleNewSearch("");
+            }}
           >
             clear
           </a>
