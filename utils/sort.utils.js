@@ -1,21 +1,21 @@
 import { defaultSort } from "../defaults";
 
-export const getSortInfo = (userSort, userHeaders, data) => {
+export const getSortInfo = (userSort, columns, data) => {
   const result = {};
   Object.assign(result, defaultSort, userSort);
 
   if (result.sortFields.length === 0)
-    result.sortFields = getSortFields(userHeaders, data);
+    result.sortFields = getSortFields(columns, data);
 
   return result;
 };
 
-function getSortFields(headers, data) {
-  if (headers.length > 0) {
-    const definedInHeaders = headers
-      .filter((h) => h.canSortBy)
-      .map((h) => h.title);
-    if (definedInHeaders.length > 0) return definedInHeaders;
+function getSortFields(columns, data) {
+  if (columns.length > 0) {
+    const definedInColumns = columns
+      .filter((c) => c.canSortBy)
+      .map((c) => c.title);
+    if (definedInColumns.length > 0) return definedInColumns;
   }
 
   if (data.length > 0) {

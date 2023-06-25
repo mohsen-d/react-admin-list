@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-import { DynamicsContext, StaticsContext } from "../context";
+import { DynamicsContext } from "../context";
 
-export function SortDirectionIcon({ fieldTitle }) {
-  const { headers } = useContext(StaticsContext);
+export function SortDirectionIcon({ field }) {
   const { sortInfo } = useContext(DynamicsContext);
 
-  return fieldTitle === sortInfo.sortBy ? (
+  return field === sortInfo.sortBy ? (
     sortInfo.sortDirection === "1" ? (
       <span className="text-secondary">&#8675; </span>
     ) : (

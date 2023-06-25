@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
 import { SortDirectionIcon } from "./sortDirectionIcon.component";
 
-export function Header({ list }) {
+export function Header({ columns }) {
   const { handleSelectAll } = useContext(HandlersContext);
   const { stickyElmsRef, options } = useContext(StaticsContext);
 
@@ -30,8 +30,8 @@ export function Header({ list }) {
             />
           )}
         </th>
-        {list.map((h, i) => (
-          <HeaderCell key={i} title={h.title} classes={h.classes} />
+        {columns.map((c, i) => (
+          <HeaderCell key={i} title={c.title} classes={c.classes} />
         ))}
       </tr>
     </thead>

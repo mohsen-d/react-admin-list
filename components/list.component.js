@@ -29,7 +29,7 @@ import {
 let loadingtdColSpan = 2;
 
 export function List({
-  headers = [],
+  columns = [],
   data,
   search = {},
   sort = {},
@@ -42,14 +42,14 @@ export function List({
   options = {},
   children,
 }) {
-  const listHeaders = utils.getHeaders(headers, data);
+  const listColumns = utils.getColumns(columns, data);
   const listOptions = Object.assign(defaultOptions, options);
 
   const handleAdd = add ?? defaultAdd;
   const handleEdit = edit ?? defaultEdit;
   const handleRemove = remove;
 
-  loadingtdColSpan = listHeaders.length + 2;
+  loadingtdColSpan = listColumns.length + 2;
 
   const stickyElmsRef = useMultiRef();
   const confirm = useConfirm();
@@ -62,7 +62,7 @@ export function List({
     data,
     listOptions.keyField
   );
-  const [sortInfo, handleSortChange] = useSort(sort, headers, data);
+  const [sortInfo, handleSortChange] = useSort(sort, columns, data);
 
   if (listOptions.stickyTop)
     useEffect(() => {
@@ -130,7 +130,7 @@ export function List({
         >
           <StaticsContext.Provider
             value={{
-              headers: listHeaders,
+              columns: listColumns,
               options: listOptions,
               loadingtdColSpan,
               stickyElmsRef,
@@ -172,7 +172,7 @@ export function List({
 
                   <div>
                     <table className={"table " + listOptions.classes}>
-                      <Header list={listHeaders} />
+                      <Header columns={listColumns} />
                       <Body list={data} />
                       {listOptions.pagination && (
                         <Footer>
