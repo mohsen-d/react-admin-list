@@ -30,7 +30,7 @@ let loadingtdColSpan = 2;
 
 export function List({
   columns = [],
-  data,
+  data = [],
   search = {},
   sort = {},
   loading = {},
@@ -142,6 +142,7 @@ export function List({
                 selectedIds,
                 sortInfo,
                 currentSize,
+                loadingInfo,
               }}
             >
               {utils.listIsRealyEmpty(
