@@ -25,6 +25,7 @@ function createProxy(columns) {
       if (target[property]) return target[property];
       if (property === "field") return target["title"].toLowerCase();
       if (property === "title") return target["field"];
+      if (property === "canSortBy") return false;
     },
   };
 

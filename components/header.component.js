@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
 import { SortDirectionIcon } from "./sortDirectionIcon.component";
+import * as utils from "../utils";
 
 export function Header({ columns }) {
   const { handleSelectAll } = useContext(HandlersContext);
@@ -31,23 +32,28 @@ export function Header({ columns }) {
           )}
         </th>
         {columns.map((c, i) => (
-          <HeaderCell key={i} title={c.title} classes={c.classes} />
+          <HeaderCell
+            key={i}
+            title={c.title}
+            field={c.field}
+            classes={c.classes}
+          />
         ))}
       </tr>
     </thead>
   );
 }
 
-function HeaderCell({ title, classes }) {
+function HeaderCell({ title, field, classes }) {
   const { sortInfo } = useContext(DynamicsContext);
   const { handleSortChange } = useContext(HandlersContext);
 
   return (
-    <th className={"text-center " + (classes ?? "")}>
-      <SortDirectionIcon fieldTitle={title} />
+    <th className={"text-center header_cell " + (classes ?? "")}>
+      <SortDirectionIcon field={field} />
       <span>
-        {sortInfo.sortFields.includes(title) ? (
-          <a data-sortby={title} onClick={handleSortChange} href={title}>
+        {utils.isSortable(field, sortInfo) ? (
+          <a href="#" data-sortby={field} onClick={handleSortChange}>
             {title}
           </a>
         ) : (

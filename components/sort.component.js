@@ -28,9 +28,9 @@ export function Sort() {
               Sort By
             </option>
           )}
-          {sortInfo.sortFields.map((f, i) => (
-            <option key={i} value={f}>
-              {f}
+          {sortInfo.sortFields.map(({ field, title }, i) => (
+            <option key={field} value={field}>
+              {title}
             </option>
           ))}
         </select>

@@ -62,7 +62,7 @@ export function List({
     data,
     listOptions.keyField
   );
-  const [sortInfo, handleSortChange] = useSort(sort, columns, data);
+  const [sortInfo, handleSortChange] = useSort(sort, listColumns, data);
 
   if (listOptions.stickyTop)
     useEffect(() => {

@@ -10,6 +10,11 @@
   font-size: 0.7rem;
 }
 
+.header_cell a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
 @media (min-width: 768px) {
   .form_check_input {
     width: 1em !important;
