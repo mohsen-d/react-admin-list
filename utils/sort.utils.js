@@ -41,7 +41,7 @@ function createProxy(fields) {
   const handler = {
     get: (target, property) => {
       if (target[property]) return target[property];
-      if (property === "field") return target["title"].toLowerCase();
+      if (property === "field") return target["title"];
       if (property === "title") return target["field"];
     },
   };
