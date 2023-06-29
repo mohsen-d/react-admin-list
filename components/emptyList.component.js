@@ -7,10 +7,11 @@ export function EmptyList() {
   const { options } = useContext(StaticsContext);
   const { handleAdd } = useContext(HandlersContext);
 
-  if (loadingInfo.isLoading) return <span>Loading...</span>;
+  if (loadingInfo.isLoading)
+    return <span data-testid="isloading-message">Loading...</span>;
   if (searchInfo.keyword !== "")
     return (
-      <span>
+      <span data-testid="nomatch-message">
         Found no match for keyword{" "}
         <i>
           <b>{searchInfo.keyword}</b>
@@ -19,7 +20,7 @@ export function EmptyList() {
     );
 
   return (
-    <div className="text-center my-5">
+    <div data-testid="norecords-message" className="text-center my-5">
       <span>
         <b>No records yet. </b>
       </span>
