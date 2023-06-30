@@ -25,7 +25,7 @@ export function Sort() {
           value={sortInfo.sortBy}
         >
           {sortInfo.sortBy === "" && (
-            <option key={-1} value="">
+            <option data-testid="sortby-default-option" key={-1} value="">
               Sort By
             </option>
           )}
