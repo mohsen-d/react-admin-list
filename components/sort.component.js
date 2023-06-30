@@ -7,6 +7,7 @@ export function Sort() {
 
   return (
     <div
+      data-testid="sort"
       className={`d-flex flex-fill my-3 pe-lg-2${
         currentSize >= 992 ? " border-end" : ""
       }`}

@@ -17,7 +17,9 @@ export function FormPlaceholder({ formToRender }) {
     output.push(<Search key="search" />);
 
   return currentSize >= 992 ? (
-    <div className="d-flex justify-content-between">{output}</div>
+    <div data-testid="wrapper" className="d-flex justify-content-between">
+      {output}
+    </div>
   ) : (
     output
   );

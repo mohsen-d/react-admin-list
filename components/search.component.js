@@ -19,7 +19,10 @@ export function Search() {
   }, []);
 
   return (
-    <div className="my-3 ps-lg-2 position-relative flex-fill">
+    <div
+      data-testid="search"
+      className="my-3 ps-lg-2 position-relative flex-fill"
+    >
       <input
         id="searchBox"
         type="text"
