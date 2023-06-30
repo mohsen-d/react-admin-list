@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect } from "react";
 import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
 
 function reset() {
@@ -25,12 +25,14 @@ export function Search() {
     >
       <input
         id="searchBox"
+        data-testid="searchBox"
         type="text"
         onKeyUp={handleKeyPress}
         className="form-control"
         placeholder="Type keyword then press Enter"
       />
       <i
+        data-testid="resetButton"
         onClick={reset}
         className="bi-x position-absolute translate-middle end-0 top-50"
       />
@@ -44,11 +46,15 @@ export function CurrentSearchInfo() {
   const { options } = useContext(StaticsContext);
 
   return searchInfo.keyword && searchInfo.keyword.length > 0 ? (
-    <div className="my-3 mt-lg-0 position-relative">
+    <div
+      data-testid="currentSearchInfo"
+      className="my-3 mt-lg-0 position-relative"
+    >
       <div className="bg-secondary-subtle p-2 d-flex">
         <div className="flex-grow-1">Filtered by: {searchInfo.keyword}</div>
         <div className="me-2">
           <a
+            data-testid="currentSearch-reset-button"
             role="button"
             className="text-success"
             onClick={() => {
@@ -62,11 +68,12 @@ export function CurrentSearchInfo() {
         <div className="d-lg-none">
           {options.search && (
             <a
+              data-testid="newSearchButton"
               role="button"
               className="text-primary"
               onClick={() => renderForm("search")}
             >
-              another search
+              new search
             </a>
           )}
         </div>
