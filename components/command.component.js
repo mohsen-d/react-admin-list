@@ -69,7 +69,10 @@ export function ListCommands({ customCommands }) {
 
   return (
     <div>
-      <div className={selectedIds.length === 0 ? "d-inline" : "d-none"}>
+      <div
+        data-testid="add-sort-search-commands"
+        className={selectedIds.length === 0 ? "d-inline" : "d-none"}
+      >
         {options.new && (
           <Command
             title="new"
@@ -112,7 +115,10 @@ export function ListCommands({ customCommands }) {
         )}
       </div>
 
-      <div className={selectedIds.length === 0 ? "d-none" : "d-inline"}>
+      <div
+        data-testid="remove-edit-custom-commands"
+        className={selectedIds.length === 0 ? "d-none" : "d-inline"}
+      >
         {options.remove && handleRemove && (
           <Command
             title="remove"
