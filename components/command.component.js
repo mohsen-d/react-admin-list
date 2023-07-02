@@ -30,7 +30,11 @@ export function Command({
       }
       className={className}
     >
-      {icon && icon.length > 0 ? <i className={icon} /> : title}
+      {icon && icon.length > 0 ? (
+        <i data-testid="command-icon" className={icon} />
+      ) : (
+        title
+      )}
     </button>
   );
 }
