@@ -53,7 +53,12 @@ function HeaderCell({ title, field, classes }) {
       <SortDirectionIcon field={field} />
       <span>
         {utils.isSortable(field, sortInfo) ? (
-          <a href="#" data-sortby={field} onClick={handleSortChange}>
+          <a
+            data-testid="sortable-header"
+            href="#"
+            data-sortby={field}
+            onClick={handleSortChange}
+          >
             {title}
           </a>
         ) : (
