@@ -58,6 +58,7 @@ function Row({ rowNumber, data, id }) {
 function Cell({ value, classes }) {
   return (
     <td
+      data-testid="normal-row-cell"
       className={
         "text-center d-none d-md-table-cell" + (classes ? " " + classes : "")
       }
