@@ -5,6 +5,6 @@ export const defaultPagination = {
     utils.setUrlParam([{ name: "page", value: p }]);
   },
   totalRecords: 0,
-  recordsPerPage: 2,
+  recordsPerPage: 10,
   currentPage: 1,
 };
