@@ -26,12 +26,6 @@ export function Pagination({
 
   return numberOfPages > 1 ? (
     <div className="d-lg-flex justify-content-between">
-      <PaginationDetails
-        totalRecords={totalRecords}
-        currentPage={currentPage}
-        numberOfPages={numberOfPages}
-        recordsPerPage={recordsPerPage}
-      />
       <nav>
         <ul className={className}>
           <li className="page-item">
@@ -106,6 +100,12 @@ export function Pagination({
           </li>
         </ul>
       </nav>
+      <PaginationDetails
+        totalRecords={totalRecords}
+        currentPage={currentPage}
+        numberOfPages={numberOfPages}
+        recordsPerPage={recordsPerPage}
+      />
     </div>
   ) : (
     ""
