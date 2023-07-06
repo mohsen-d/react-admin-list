@@ -33,10 +33,6 @@ export function Body({ list }) {
 function Row({ rowNumber, data, id }) {
   const { columns } = useContext(StaticsContext);
 
-  const cells = Object.entries(data)
-    .filter(([k, v]) => columns.some((c) => c.field === k))
-    .map(([k, v]) => v);
-
   return (
     <tr>
       <td>
@@ -47,10 +43,10 @@ function Row({ rowNumber, data, id }) {
           <RowCommands key="1" id={id ?? rowNumber} />
         </div>
       </td>
-      {cells.map((c, i) => (
-        <Cell key={i} value={c} classes={columns[i].classes} />
+      {columns.map((c, i) => (
+        <Cell key={i} value={data[c.field]} classes={c.classes} />
       ))}
-      {<MergedCell values={cells} id={id ?? rowNumber} />}
+      {<MergedCell values={data} id={id ?? rowNumber} />}
     </tr>
   );
 }
@@ -73,10 +69,10 @@ function MergedCell({ values }) {
 
   return (
     <td colSpan={loadingtdColSpan - 3} className="d-table-cell d-md-none">
-      {values.map((v, i) => (
+      {columns.map((c, i) => (
         <div key={i}>
-          <SortDirectionIcon fieldTitle={columns[i].field} />
-          {getContent(v, columns[i].title)}
+          <SortDirectionIcon fieldTitle={c.field} />
+          {getContent(values[c.field], c.title)}
         </div>
       ))}
     </td>
