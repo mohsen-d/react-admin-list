@@ -171,7 +171,7 @@ export function List({
                     <CurrentSearchInfo />
                   </div>
 
-                  <div>
+                  <div className="table-responsive">
                     <table className={"table " + listOptions.classes}>
                       <Header columns={listColumns} />
                       <Body list={data} />
