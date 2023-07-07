@@ -153,7 +153,7 @@ export function RowCommands({ id }) {
 
   return (
     <div className="d-md-flex justify-content-between flex-grow-1">
-      <div className="d-block text-center d-md-inline">
+      <div className="d-block text-center d-md-inline me-md-1">
         {options.multipleSelection && (
           <input
             id={id}
@@ -165,7 +165,7 @@ export function RowCommands({ id }) {
       </div>
 
       {options.edit && (
-        <div className="d-none d-md-inline">
+        <div className="d-none d-md-inline me-md-1">
           <Command
             title="edit"
             icon="bi-pencil-square"

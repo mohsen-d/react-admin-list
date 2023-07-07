@@ -21,7 +21,7 @@ export function Header({ columns }) {
         ref={stickyElmsRef}
         data-sticky-classes="table-light"
       >
-        <th className="col-md-2">
+        <th className="col-md-auto">
           <span className="row_index text-center d-md-inline-block">#</span>
           {options.multipleSelection && (
             <input
