@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import { defaultAdd, defaultEdit, defaultOptions } from "../defaults";
+import {
+  defaultAdd,
+  defaultEdit,
+  defaultOptions,
+  defaultStyles,
+} from "../defaults";
 import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
 import * as utils from "../utils";
 import { useUpdateEffect, useMultiRef } from "../hooks";
@@ -34,16 +39,17 @@ export function List({
   search = {},
   sort = {},
   loading = {},
+  styles = {},
   add,
   edit,
   remove,
   pagination = {},
   commands = [],
   options = {},
-  children,
 }) {
   const listColumns = utils.getColumns(columns, data);
   const listOptions = Object.assign(defaultOptions, options);
+  const listStyles = Object.assign(defaultStyles, styles);
 
   const handleAdd = add ?? defaultAdd;
   const handleEdit = edit ?? defaultEdit;
@@ -114,7 +120,7 @@ export function List({
 
   return (
     <div className="row">
-      <div className="col-12 col-lg-8 offset-lg-2 position-relative">
+      <div className={"position-relative " + listStyles.container}>
         <HandlersContext.Provider
           value={{
             handleSelection,
@@ -172,7 +178,7 @@ export function List({
                   </div>
 
                   <div className="table-responsive">
-                    <table className={"table " + listOptions.classes}>
+                    <table className={"table " + listStyles.table}>
                       <Header columns={listColumns} />
                       <Body list={data} />
                       {listOptions.pagination && (

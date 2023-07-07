@@ -1,5 +1,4 @@
 export const defaultOptions = {
-  classes: "",
   multipleSelection: true,
   edit: true,
   remove: true,
