@@ -152,7 +152,7 @@ export function RowCommands({ id }) {
   const { options } = useContext(StaticsContext);
 
   return (
-    <div className="d-md-flex justify-content-between flex-grow-1">
+    <div className="d-md-flex justify-content-start flex-grow-1">
       <div className="d-block text-center d-md-inline me-md-1">
         {options.multipleSelection && (
           <input
