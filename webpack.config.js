@@ -1,7 +1,7 @@
 const path = require("path");
 
-const srcPath = path.resolve(__dirname, "./app.js");
-const distPath = path.resolve(__dirname, "./dist");
+const srcPath = path.resolve(__dirname, "./examples/index.js");
+const distPath = path.resolve(__dirname, "./examples/dist");
 
 module.exports = {
   entry: {
@@ -10,6 +10,9 @@ module.exports = {
   output: {
     filename: "bundle.js",
     path: distPath,
+  },
+  devServer: {
+    static: distPath,
   },
   module: {
     rules: [
