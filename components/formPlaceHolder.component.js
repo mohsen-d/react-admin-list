@@ -10,10 +10,10 @@ export function FormPlaceholder({ formToRender }) {
 
   const output = [];
 
-  if ((formToRender === "sort" && options.sort) || currentSize >= 992)
+  if (options.sort && (formToRender === "sort" || currentSize >= 992))
     output.push(<Sort key="sort" />);
 
-  if ((formToRender === "search" && options.search) || currentSize >= 992)
+  if (options.search && (formToRender === "search" || currentSize >= 992))
     output.push(<Search key="search" />);
 
   return currentSize >= 992 ? (

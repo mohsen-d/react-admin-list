@@ -47,12 +47,12 @@ export function Header({ columns }) {
 function HeaderCell({ title, field, classes }) {
   const { sortInfo } = useContext(DynamicsContext);
   const { handleSortChange } = useContext(HandlersContext);
-
+  const { options } = useContext(StaticsContext);
   return (
     <th className={"text-center header_cell " + (classes ?? "")}>
       <SortDirectionIcon field={field} />
       <span>
-        {utils.isSortable(field, sortInfo) ? (
+        {options.sort && utils.isSortable(field, sortInfo) ? (
           <a
             data-testid="sortable-header"
             href="#"
