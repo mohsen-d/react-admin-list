@@ -7,14 +7,11 @@ export function Pagination({
   totalRecords,
   recordsPerPage,
   currentPage,
+  numberOfPages,
+  numericPages,
   handler,
 }) {
   const { currentSize } = useContext(DynamicsContext);
-  const numberOfPages = Math.ceil(totalRecords / recordsPerPage);
-  const numericPages =
-    currentPage > 1
-      ? [currentPage - 1, currentPage, currentPage + 1]
-      : [1, 2, 3];
 
   function handlePageChange(e) {
     handler(parseInt(e.target.attributes["data-page"].value));
@@ -36,7 +33,7 @@ export function Pagination({
           <li className="page-item">
             <a
               className="page-link"
-              data-page={numericPages[0]}
+              data-page={currentPage === 1 ? 1 : currentPage - 1}
               onClick={handlePageChange}
             >
               &lsaquo;
@@ -44,9 +41,8 @@ export function Pagination({
           </li>
           <li
             className={
-              "page-item" + currentPage > 1
-                ? " d-none d-md-inline"
-                : " disabled"
+              "page-item" +
+              (currentPage === 1 ? " disabled" : " d-none d-md-inline")
             }
           >
             <a
@@ -60,7 +56,9 @@ export function Pagination({
           <li
             className={
               "page-item" +
-              (currentPage == 1 ? " d-none d-md-inline" : " disabled")
+              (currentPage === numericPages[1]
+                ? " disabled"
+                : " d-none d-md-inline")
             }
           >
             <a
@@ -71,7 +69,14 @@ export function Pagination({
               {numericPages[1]}
             </a>
           </li>
-          <li className="page-item d-none d-md-inline">
+          <li
+            className={
+              "page-item" +
+              (currentPage === numericPages[2]
+                ? " disabled"
+                : " d-none d-md-inline")
+            }
+          >
             <a
               data-page={numericPages[2]}
               className="page-link"
@@ -83,7 +88,9 @@ export function Pagination({
           <li className="page-item">
             <a
               className="page-link"
-              data-page={numericPages[2]}
+              data-page={
+                currentPage === numberOfPages ? currentPage : currentPage + 1
+              }
               onClick={handlePageChange}
             >
               &rsaquo;
