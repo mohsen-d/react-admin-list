@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import {
   defaultAdd,
@@ -57,6 +57,8 @@ export function List({
 
   loadingtdColSpan = listColumns.length + 2;
 
+  const listTableElmRef = useRef();
+  const listContainerElmRef = useRef();
   const stickyElmsRef = useMultiRef();
   const confirm = useConfirm();
   const currentSize = useCurrentSize();
@@ -95,6 +97,14 @@ export function List({
     if (formToRender === "search") setFormToRender("");
   }, [searchInfo]);
 
+  useEffect(() => {
+    const tableWidth = listTableElmRef.current.offsetWidth;
+    const containerWidth = listContainerElmRef.current.offsetWidth;
+    tableWidth > containerWidth
+      ? listTableElmRef.current.parentNode.classList.add("table-responsive")
+      : listTableElmRef.current.parentNode.classList.remove("table-responsive");
+  });
+
   async function runHandler(
     needsConfirm = true,
     handlerName,
@@ -120,7 +130,10 @@ export function List({
 
   return (
     <div className="row">
-      <div className={"position-relative " + listStyles.container}>
+      <div
+        ref={listContainerElmRef}
+        className={"position-relative " + listStyles.container}
+      >
         <HandlersContext.Provider
           value={{
             handleSelection,
@@ -146,6 +159,7 @@ export function List({
               value={{
                 searchInfo,
                 selectedIds,
+                paginationInfo,
                 sortInfo,
                 currentSize,
                 loadingInfo,
@@ -177,8 +191,11 @@ export function List({
                     <CurrentSearchInfo />
                   </div>
 
-                  <div className="table-responsive">
-                    <table className={"table " + listStyles.table}>
+                  <div>
+                    <table
+                      ref={listTableElmRef}
+                      className={"table " + listStyles.table}
+                    >
                       <Header columns={listColumns} />
                       <Body list={data} />
                       {listOptions.pagination && (
