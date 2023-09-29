@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 
-import { StaticsContext } from "../context";
+import { DynamicsContext, StaticsContext } from "../context";
 import { EmptyList } from "./emptyList.component";
 import { RowCommands } from "./command.component";
 import { SortDirectionIcon } from "./sortDirectionIcon.component";
 
 export function Body({ list }) {
   const { options, loadingtdColSpan } = useContext(StaticsContext);
+  const { paginationInfo } = useContext(DynamicsContext);
 
   return (
     <tbody>
@@ -22,7 +23,10 @@ export function Body({ list }) {
             key={r[options.keyField]}
             id={r[options.keyField]}
             data={r}
-            rowNumber={i + 1}
+            rowNumber={
+              paginationInfo.recordsPerPage * (paginationInfo.currentPage - 1) +
+              (i + 1)
+            }
           />
         ))
       )}
