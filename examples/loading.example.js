@@ -9,53 +9,55 @@ const columns = [
   { field: "language", title: "Language" },
 ];
 
-const laodingOne = {
-  handler: () => {
+const customLoading = {
+  handler: (operation, step) => {
     const elm = document.getElementById("loading");
-    elm.classList.remove("d-none");
+    step === "started"
+      ? elm.classList.remove("d-none")
+      : elm.classList.add("d-none");
   },
-  disableList: true,
-  isLoading: false,
-};
-
-const laodingTwo = {
-  handler: () => {},
   disableList: false,
   isLoading: false,
 };
 
 const sort = {
   handler: async (sortInfo) => {
-    const date1 = Date.now();
-    while (Date.now() - date1 < 5000) {}
-
-    console.log(`sorting list by ${sortInfo.sortBy} ${sortInfo.sortDirection}`);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(true);
+      }, 3000);
+    });
   },
 };
 
-export default function Loading() {
-  const [loading, setLoading] = useState(laodingOne);
+const options = {
+  new: false,
+  edit: false,
+  remove: false,
+  search: false,
+  multipleSelection: false,
+};
 
+export default function Loading() {
   return (
     <>
       <div>
-        <input
-          type="button"
-          className="btn btn-primary me-1"
-          value="Sort & list remains active & no handler"
-          onClick={() => setLoading(laodingTwo)}
-        />
-        <input
-          type="button"
-          className="btn btn-success"
-          value="Sort & list becomes disabled & with handler"
-          onClick={() => setLoading(laodingOne)}
+        <h2>Default loading</h2>
+        <List data={data} columns={columns} sort={sort} options={options} />
+      </div>
+      <div>
+        <h2>Custom laoding</h2>
+        <div id="loading" className="d-none text-secondary my-1">
+          Please wait ...
+        </div>
+        <List
+          data={data}
+          columns={columns}
+          loading={customLoading}
+          sort={sort}
+          options={options}
         />
       </div>
-      <div id="loading" className="d-none bg-success">
-        Please wait ...
-      </div>
-      <List data={data} columns={columns} loading={loading} sort={sort} />
     </>
   );
 }
