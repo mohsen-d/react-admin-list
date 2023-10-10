@@ -129,7 +129,7 @@ export function List({
   }
 
   return (
-    <div className="row">
+    <div>
       <div
         ref={listContainerElmRef}
         className={"position-relative " + listStyles.container}

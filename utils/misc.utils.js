@@ -30,6 +30,7 @@ export function setUrlParam(params) {
 export function makeStickyOnScroll(ref) {
   let classes = "position-sticky";
   let elmClasses;
+  let lastScrollY = window.scrollY;
 
   function justify(elm, offset) {
     if (!elm.classList.contains("position-sticky")) {
@@ -44,26 +45,42 @@ export function makeStickyOnScroll(ref) {
     }
   }
 
-  window.addEventListener("scroll", (e) => {
-    ref.current.forEach((elm, i, elms) => {
-      const prevElmRect = elms[i - 1]?.getBoundingClientRect() ?? {
+  function getRect(elm) {
+    return (
+      elm?.getBoundingClientRect() ?? {
         top: 0,
         height: 0,
-      };
+      }
+    );
+  }
 
-      const offset = prevElmRect.height + prevElmRect.top;
+  function getOffset(elm, prevElm) {
+    const prevElmRect = getRect(prevElm);
+    const parentElmRect = getRect(elm.closest(".table-responsive"));
 
+    let offset = prevElmRect.height + prevElmRect.top;
+
+    isScrollingDown
+      ? (offset -= parentElmRect.top)
+      : (offset += parentElmRect.top);
+
+    return offset;
+  }
+
+  function isScrollingDown() {
+    return window.scrollY - lastScrollY >= 0;
+  }
+
+  window.addEventListener("scroll", (e) => {
+    ref.current.forEach((elm, i, elms) => {
       elmClasses = `${classes} ${
         elm.attributes["data-sticky-classes"]?.value ?? ""
       }`.trim();
 
-      const { top } = elm.getBoundingClientRect();
+      const { top } = getRect(elms[0]);
+      const offset = i === 0 ? 0 : getOffset(elm, elms[0]);
 
-      if (top <= window.scrollY) {
-        top !== offset && justify(elm, offset);
-      } else {
-        clear(elm);
-      }
+      top <= 0 ? justify(elm, offset) : clear(elm);
     });
   });
 }
