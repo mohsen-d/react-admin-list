@@ -12,7 +12,7 @@ export function Confirm({ show, onConfirm, onCancel }) {
     ? createPortal(
         <div
           data-testid="confirm-modal"
-          className="loading d-flex justify-content-center align-items-center bg-body position-absolute top-0 start-0 w-100 h-100"
+          className="loading d-flex justify-content-center align-items-center bg-body position-fixed top-0 start-0 w-100 h-100"
         >
           <div
             data-testid="confirm-modal-box"
