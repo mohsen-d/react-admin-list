@@ -9,8 +9,9 @@ const columns = [
   { field: "language", title: "Language" },
 ];
 
-const gray = {
-  container: "bg-secondary",
+const styleOne = {
+  container: "bg-body-tertiary p-3",
+  table: "table-warning table-striped",
 };
 
 const blue = {
@@ -22,45 +23,31 @@ const normal = {
 };
 
 export default function Styles() {
-  const [styles, setStyle] = useState(normal);
-
-  function changeStyle(color) {
-    switch (color) {
-      case "gray":
-        setStyle(gray);
-        break;
-      case "blue":
-        setStyle(blue);
-        break;
-      default:
-        setStyle(normal);
-        break;
-    }
-  }
-
   return (
     <>
-      <div>
-        <input
-          type="button"
-          className="btn btn-secondary me-1"
-          value="Gray"
-          onClick={() => changeStyle("gray")}
-        />
-        <input
-          type="button"
-          className="btn btn-info me-1"
-          value="Blue"
-          onClick={() => changeStyle("blue")}
-        />
-        <input
-          type="button"
-          className="btn btn-outline-secondary"
-          value="Reset"
-          onClick={() => changeStyle("normal")}
-        />
+      <div className="lh-lg">
+        <h2 className="mb-4">
+          <i class="bi bi-code-slash"></i> Styles
+        </h2>
+        <p>
+          custom classes can be applied to the <mark>&lt;div&gt;</mark> wrapping
+          the <mark>&lt;List&gt;</mark> and also the <mark>&lt;table&gt;</mark>{" "}
+          containing the data through the <mark>styles</mark> prop.
+        </p>
+        <pre>
+          <code>{`const customStyle = {
+  container: "bg-body-tertiary p-3",
+  table: "table-warning table-striped",
+};
+<List data={data} styles={customStyle} />`}</code>
+        </pre>
       </div>
-      <List data={data} columns={columns} styles={styles} />
+      <h3 className="mt-5">
+        <i class="bi bi-box-arrow-down"></i> Output
+      </h3>
+      <div className="mt-5">
+        <List data={data} columns={columns} styles={styleOne} />
+      </div>
     </>
   );
 }

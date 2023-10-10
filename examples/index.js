@@ -14,6 +14,7 @@ import Options from "./options.example";
 import Pagination from "./pagination.example";
 import Search from "./search.example";
 import Sort from "./sort.example";
+import StickyTop from "./stickytop.example";
 import Styles from "./styles.example";
 
 const demos = {
@@ -26,8 +27,10 @@ const demos = {
   pagination: <Pagination />,
   search: <Search />,
   sort: <Sort />,
+  stickytop: <StickyTop />,
   styles: <Styles />,
 };
+
 export default function App() {
   const [searchParams, setSearchParams] = useSearchParams();
 
