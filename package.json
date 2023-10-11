@@ -11,10 +11,11 @@
   "keywords": [
     "react",
     "bootstrap",
+    "component",
     "list",
     "admin",
     "table",
-    "reactadminlist"
+    "react-admin-list"
   ],
   "files": [
     "assets",
