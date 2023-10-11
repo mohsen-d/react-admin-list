@@ -72,7 +72,7 @@ export default function Sort() {
         <p>
           <mark>Sort</mark> is enabled by default, but you can disable it
           through{" "}
-          <a href="/?demo=options">
+          <a href="?demo=options">
             <mark>options</mark>
           </a>{" "}
           prop.
@@ -112,7 +112,7 @@ export default function Sort() {
         <p>
           <strong className="attention">
             If <mark>sortField</mark> is not provided,
-            <a href="/?demo=columns">
+            <a href="?demo=columns">
               <mark>columns</mark>
             </a>{" "}
             prop will be used if defined.

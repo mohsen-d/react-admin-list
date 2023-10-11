@@ -33,7 +33,7 @@ export default function GetStarted() {
           <div className="d-flex justify-content-between">
             <a
               className="with-hover border rounded-4 border-primary px-4 py-2"
-              href="/examples.html?demo=basic"
+              href="examples.html?demo=basic"
             >
               Docs
             </a>
@@ -45,7 +45,7 @@ export default function GetStarted() {
             </a>
             <a
               className="with-hover border rounded-4 border-primary px-4 py-2"
-              href="/"
+              href="https://github.com/mohsen-d/react-admin-list"
             >
               Source
             </a>

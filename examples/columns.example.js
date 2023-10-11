@@ -44,7 +44,7 @@ export default function Columns() {
             <li>
               <mark>canSortBy</mark> : Can user sort list by this field? This
               will be ignored if <mark>sortFields</mark> are defined in{" "}
-              <a href="/?demo=sort">
+              <a href="?demo=sort">
                 <mark>sort</mark>
               </a>{" "}
               prop

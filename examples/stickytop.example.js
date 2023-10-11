@@ -29,7 +29,7 @@ export default function StickyTop() {
           To stick the upper part of the <mark>&lt;List&gt;</mark> to the top of
           the page when user scrolls down the page, set <mark>stickytop</mark>{" "}
           as <mark>true</mark> in{" "}
-          <a href="/?demo=options">
+          <a href="?demo=options">
             <mark>options</mark>
           </a>{" "}
           prop. <br /> <strong> (This is the default behaviour)</strong>

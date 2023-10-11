@@ -54,7 +54,7 @@ export default function Search() {
         <p>
           <mark>Search</mark> is enabled by default, but you can disable it
           through{" "}
-          <a href="/?demo=options">
+          <a href="?demo=options">
             <mark>options</mark>
           </a>{" "}
           prop.

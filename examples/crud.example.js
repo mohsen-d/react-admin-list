@@ -46,7 +46,7 @@ export default function Crud() {
         <h3 className="mt-4">Add</h3>
         <p>
           If adding new items is enabled in{" "}
-          <a href="/?demo=options">
+          <a href="?demo=options">
             <mark>options</mark>
           </a>{" "}
           but no custom handler is provided, clicking on <mark>+</mark> icon
@@ -72,7 +72,7 @@ export default function Crud() {
         <h3 className="mt-5">Edit</h3>
         <p>
           Just like <mark>add</mark>, if editing is enabled in{" "}
-          <a href="/?demo=options">
+          <a href="?demo=options">
             <mark>options</mark>
           </a>{" "}
           but no custom handler is provided, clicking on{" "}
@@ -96,7 +96,7 @@ export default function Crud() {
           <strong>User can only edit one row. </strong>
           <br /> If he selects multiple rows, the edit icon at the top of the
           list will disappear. Editing multiple rows is possible through{" "}
-          <a href="/?demo=options">
+          <a href="?demo=options">
             <mark>commands</mark>
           </a>{" "}
           prop.
@@ -117,7 +117,7 @@ export default function Crud() {
           Contrary to <mark>add</mark> and <mark>edit</mark>, if{" "}
           <mark>remove</mark> prop is not provided, no <mark>remove</mark> icon
           will be shown, even if it's enabled in{" "}
-          <a href="/?demo=options">
+          <a href="?demo=options">
             <mark>options</mark>
           </a>
         </p>

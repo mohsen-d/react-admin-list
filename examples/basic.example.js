@@ -50,15 +50,15 @@ export default function Basic() {
         </pre>
         <p>
           Functionalities such as{" "}
-          <a href="/?demo=search">
+          <a href="?demo=search">
             <mark>search</mark>
           </a>{" "}
           ,{" "}
-          <a href="/?demo=sort">
+          <a href="?demo=sort">
             <mark>sort</mark>
           </a>{" "}
           ,{" "}
-          <a href="/?demo=pagination">
+          <a href="?demo=pagination">
             <mark>paging</mark>
           </a>{" "}
           and etc are generated based on the <mark>data</mark> passed into the{" "}

@@ -50,7 +50,7 @@ export default function Pagination() {
         <p>
           <mark>Paging</mark> is enabled by default, but you can disable it
           through{" "}
-          <a href="/?demo=options">
+          <a href="?demo=options">
             <mark>options</mark>
           </a>{" "}
           prop.
