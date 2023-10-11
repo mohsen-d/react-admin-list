@@ -9,6 +9,7 @@ import Basic from "./basic.example";
 import Columns from "./columns.example";
 import Commands from "./commands.example";
 import Crud from "./crud.example";
+import GetStarted from "./getstarted.example";
 import Loading from "./loading.example";
 import Options from "./options.example";
 import Pagination from "./pagination.example";
@@ -22,6 +23,7 @@ const demos = {
   columns: <Columns />,
   commands: <Commands />,
   crud: <Crud />,
+  getStarted: <GetStarted />,
   loading: <Loading />,
   options: <Options />,
   pagination: <Pagination />,
@@ -34,7 +36,7 @@ const demos = {
 export default function App() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  return demos[searchParams.get("demo") ?? "basic"];
+  return demos[searchParams.get("demo") ?? "getStarted"];
 }
 
 const root = createRoot(document.getElementById("root"));
