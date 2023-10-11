@@ -1,5 +1,5 @@
 {
-  "name": "reactadminlist",
+  "name": "react-admin-list",
   "version": "1.0.0",
   "description": "a react list component based on bootstrap to use in admin panels",
   "main": "index.js",
