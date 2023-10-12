@@ -6,9 +6,13 @@ import {
   defaultOptions,
   defaultStyles,
 } from "../defaults";
+
 import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
+
 import * as utils from "../utils";
+
 import { useUpdateEffect, useMultiRef } from "../hooks";
+
 import {
   Body,
   Confirm,
@@ -64,13 +68,22 @@ export function List({
   const currentSize = useCurrentSize();
   const [formToRender, setFormToRender] = useState();
   const [loadingInfo, setIsLoading] = useLoading(loading);
-  const [paginationInfo, handlePageChange] = usePagination(pagination, data);
-  const [searchInfo, handleNewSearch] = useSearch(search);
+  const [
+    paginationInfo,
+    pagingHandler,
+    handlePageChange,
+    updatePagingAfterDataChange,
+  ] = usePagination(pagination, data);
+  const [searchInfo, searchHandler, handleNewSearch] = useSearch(search);
   const [selectedIds, handleSelection, handleSelectAll] = useSelection(
     data,
     listOptions.keyField
   );
-  const [sortInfo, handleSortChange] = useSort(sort, listColumns, data);
+  const [sortInfo, sortHandler, handleSortChange] = useSort(
+    sort,
+    listColumns,
+    data
+  );
 
   if (listOptions.stickyTop)
     useEffect(() => {
@@ -78,31 +91,34 @@ export function List({
     }, []);
 
   useUpdateEffect(() => {
-    runHandler(false, "sort", sortInfo.handler, sortInfo);
+    runHandler(false, "sort", sortHandler, sortInfo);
 
     setFormToRender("");
   }, [sortInfo]);
 
   useUpdateEffect(() => {
-    runHandler(
-      false,
-      "pagination",
-      paginationInfo.handler,
-      paginationInfo.currentPage
-    );
-  }, [paginationInfo]);
+    if (paginationInfo.needToFetchData)
+      runHandler(
+        false,
+        "pagination",
+        pagingHandler,
+        paginationInfo.currentPage
+      );
+  }, [paginationInfo.currentPage]);
 
   useUpdateEffect(() => {
-    runHandler(false, "search", searchInfo.handler, searchInfo.keyword);
+    runHandler(false, "search", searchHandler, searchInfo.keyword);
     if (formToRender === "search") setFormToRender("");
   }, [searchInfo]);
 
   useEffect(() => {
-    const tableWidth = listTableElmRef.current.offsetWidth;
+    const tableWidth = listTableElmRef.current?.offsetWidth ?? 0;
     const containerWidth = listContainerElmRef.current.offsetWidth;
     tableWidth > containerWidth
-      ? listTableElmRef.current.parentNode.classList.add("table-responsive")
-      : listTableElmRef.current.parentNode.classList.remove("table-responsive");
+      ? listTableElmRef.current?.parentNode.classList.add("table-responsive")
+      : listTableElmRef.current?.parentNode.classList.remove(
+          "table-responsive"
+        );
   });
 
   async function runHandler(
@@ -125,7 +141,7 @@ export function List({
     const result = await handler(...args);
     setIsLoading(false);
     loadingInfo.handler(handlerName, "ended");
-    return result;
+    updatePagingAfterDataChange(result, handlerName !== "sort");
   }
 
   return (
