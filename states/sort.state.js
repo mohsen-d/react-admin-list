@@ -2,7 +2,8 @@ import { useState } from "react";
 import { getSortInfo } from "../utils";
 
 export function useSort(sort, columns, data) {
-  const [sortInfo, setSortInfo] = useState(getSortInfo(sort, columns, data));
+  const { handler: sortHandler, ...info } = getSortInfo(sort, columns, data);
+  const [sortInfo, setSortInfo] = useState(info);
 
   function handleSortChange(e) {
     e.preventDefault();
@@ -20,5 +21,5 @@ export function useSort(sort, columns, data) {
     });
   }
 
-  return [sortInfo, handleSortChange];
+  return [sortInfo, sortHandler, handleSortChange];
 }

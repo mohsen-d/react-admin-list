@@ -2,7 +2,8 @@ import { useState } from "react";
 import { getSearchInfo } from "../utils";
 
 export function useSearch(search) {
-  const [searchInfo, setSearchInfo] = useState(getSearchInfo(search));
+  const { handler: searchHandler, ...info } = getSearchInfo(search);
+  const [searchInfo, setSearchInfo] = useState(info);
 
   function handleNewSearch(keyword) {
     setSearchInfo((prev) => ({
@@ -11,5 +12,5 @@ export function useSearch(search) {
     }));
   }
 
-  return [searchInfo, handleNewSearch];
+  return [searchInfo, searchHandler, handleNewSearch];
 }
