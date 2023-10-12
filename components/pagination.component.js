@@ -69,22 +69,24 @@ export function Pagination({
               {numericPages[1]}
             </a>
           </li>
-          <li
-            className={
-              "page-item" +
-              (currentPage === numericPages[2]
-                ? " disabled"
-                : " d-none d-md-inline")
-            }
-          >
-            <a
-              data-page={numericPages[2]}
-              className="page-link"
-              onClick={handlePageChange}
+          {numericPages[2] && (
+            <li
+              className={
+                "page-item" +
+                (currentPage === numericPages[2]
+                  ? " disabled"
+                  : " d-none d-md-inline")
+              }
             >
-              {numericPages[2]}
-            </a>
-          </li>
+              <a
+                data-page={numericPages[2]}
+                className="page-link"
+                onClick={handlePageChange}
+              >
+                {numericPages[2]}
+              </a>
+            </li>
+          )}
           <li className="page-item">
             <a
               className="page-link"
