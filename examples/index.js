@@ -37,8 +37,16 @@ const demos = {
 
 export default function App() {
   const [searchParams, setSearchParams] = useSearchParams();
-
-  return demos[searchParams.get("demo") ?? "demo"];
+  let page = "basic";
+  switch (window.location.pathname) {
+    case "/":
+    case "/index.html":
+      return demos["getStarted"];
+    case "/demo.html":
+      return demos["demo"];
+    default:
+      return demos[searchParams.get("page") ?? "basic"];
+  }
 }
 
 const root = createRoot(document.getElementById("root"));

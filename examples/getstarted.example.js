@@ -33,13 +33,13 @@ export default function GetStarted() {
           <div className="d-flex justify-content-between">
             <a
               className="with-hover border rounded-4 border-primary px-4 py-2"
-              href="examples.html?demo=basic"
+              href="docs.html?demo=basic"
             >
               Docs
             </a>
             <a
               className="with-hover border rounded-4 border-primary px-4 py-2"
-              href="/"
+              href="/demo.html"
             >
               Demo
             </a>
@@ -78,9 +78,6 @@ export default function GetStarted() {
               </div>
               <div className="mb-2">
                 <i class="bi bi-dash d-none d-lg-inline"></i> Paging
-              </div>
-              <div className="mb-2">
-                <i class="bi bi-dash d-none d-lg-inline"></i> CRUD operations
               </div>
             </div>
           </div>

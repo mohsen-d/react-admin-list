@@ -43,7 +43,6 @@ function fetchData() {
   let result = data;
 
   if (keyword !== "") {
-    currentPage = 1;
     result = result.filter(
       (d) =>
         d.title.includes(keyword) ||
@@ -59,39 +58,35 @@ function fetchData() {
   totalRecords = result.length;
 
   const numberOfPages = Math.ceil(totalRecords / recordsPerPage);
+
   if (currentPage > numberOfPages) {
     currentPage = numberOfPages;
   }
 
   const from = recordsPerPage * (currentPage - 1);
   const to = recordsPerPage * currentPage;
+
   return result.filter((d, i) => i + 1 > from && i + 1 <= to);
 }
+
+let addCallback;
 
 export default function Demo() {
   const [listData, setListData] = useState(fetchData);
   const [currentView, setCurrentView] = useState("list");
-
-  function saveHandler(e) {
-    e.preventDefault();
-    const newRecord = Object.fromEntries(new FormData(e.target));
-    newRecord._id = data.length + 1;
-    data.push(newRecord);
-    setListData(fetchData());
-    setCurrentView("list");
-  }
 
   function cancelHandler() {
     setCurrentView("list");
   }
 
   // add
-  const addHandler = function () {
+  const addHandler = function (cb) {
+    addCallback = cb;
     setCurrentView("newForm");
   };
 
   // remove
-  const removeHandler = function (ids) {
+  const removeHandler = function (ids, cb) {
     ids.forEach((id) => {
       const index = data.findIndex((r) => r._id === id);
       data.splice(index, 1);
@@ -100,21 +95,23 @@ export default function Demo() {
     return new Promise((resolve) => {
       setTimeout(() => {
         setListData(fetchData());
-        resolve(totalRecords);
+        cb(totalRecords);
+        resolve();
       }, 1000);
     });
   };
 
   // sort
   const sort = {
-    handler: (sortInfo) => {
+    handler: (sortInfo, cb) => {
       sortBy = sortInfo.sortBy;
       sortDirection = sortInfo.sortDirection;
 
       return new Promise((resolve) => {
         setTimeout(() => {
           setListData(fetchData());
-          resolve(totalRecords);
+          cb(totalRecords);
+          resolve();
         }, 1000);
       });
     },
@@ -122,12 +119,14 @@ export default function Demo() {
 
   // search
   const search = {
-    handler: (kw) => {
+    handler: (kw, cb) => {
       keyword = kw;
+      currentPage = 1;
       return new Promise((resolve) => {
         setTimeout(() => {
           setListData(fetchData());
-          resolve(totalRecords);
+          cb(totalRecords);
+          resolve();
         }, 1000);
       });
     },
@@ -136,12 +135,13 @@ export default function Demo() {
 
   // paging
   const pagination = {
-    handler: (p) => {
+    handler: (p, cb) => {
       currentPage = parseInt(p);
       return new Promise((resolve) => {
         setTimeout(() => {
           setListData(fetchData());
-          resolve(totalRecords);
+          cb(totalRecords);
+          resolve();
         }, 1000);
       });
     },
@@ -150,8 +150,23 @@ export default function Demo() {
     totalRecords,
   };
 
+  function saveHandler(e) {
+    e.preventDefault();
+    const newRecord = Object.fromEntries(new FormData(e.target));
+    newRecord._id = data.length + 1;
+    data.push(newRecord);
+    setListData(fetchData());
+    addCallback(totalRecords);
+    setCurrentView("list");
+  }
+
   return (
     <>
+      <div>
+        <a href="index.html">
+          <i className="bi bi-arrow-left-short"></i> Return
+        </a>
+      </div>
       <h1 className="mt-5">
         <i className="bi bi-book"></i> Books
       </h1>
@@ -160,10 +175,10 @@ export default function Demo() {
           <List
             data={listData}
             remove={removeHandler}
-            search={search}
-            sort={sort}
+            //search={search}
+            //sort={sort}
             columns={columns}
-            pagination={pagination}
+            //pagination={pagination}
             add={addHandler}
           />
         ) : (
@@ -243,7 +258,7 @@ function NewForm({ saveHandler, cancelHandler }) {
       </div>
 
       <div className="mb-3">
-        <button type="submit" className="btn btn-success mb-3">
+        <button type="submit" className="btn btn-success mb-3 me-1">
           Save
         </button>
         <button
