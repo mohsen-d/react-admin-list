@@ -1,25 +1,22 @@
 import { defaultPagination } from "../defaults";
 
-export function getPaginationInfo(userPagination, data) {
-  const result = {};
+export function setPaginationInfo(output, userPagination, totalRecords) {
+  Object.assign(output, defaultPagination, userPagination);
 
-  Object.assign(result, defaultPagination, userPagination);
+  regulateInfo(output, totalRecords);
 
-  regulateInfo(result, data);
-
-  return result;
+  return output;
 }
 
-function regulateInfo(info, data) {
-  regulateTotalRecords(info, data);
+function regulateInfo(info, totalRecords) {
+  regulateTotalRecords(info, totalRecords);
   info.numberOfPages = regulateNumberOfPages(info);
   info.currentPage = regulateCurrentPage(info);
   info.numericPages = regulateNumericPages(info);
-  console.log(info);
 }
 
-export function regulateTotalRecords(info, data) {
-  if (info.totalRecords < 1) info.totalRecords = data.length;
+export function regulateTotalRecords(info, totalRecords) {
+  if (info.totalRecords < 1) info.totalRecords = totalRecords;
 }
 
 export function regulateNumberOfPages(info) {

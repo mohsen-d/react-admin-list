@@ -1,9 +1,13 @@
-import { useState } from "react";
-import { getSortInfo } from "../utils";
+import { setSortInfo } from "../utils";
 
-export function useSort(sort, columns, data) {
-  const { handler: sortHandler, ...info } = getSortInfo(sort, columns, data);
-  const [sortInfo, setSortInfo] = useState(info);
+const _sortInfo = {};
+let _isSet = false;
+
+export function useSort(sort, columns, data, setStatus) {
+  if (!_isSet) {
+    _isSet = true;
+    setSortInfo(_sortInfo, sort, columns, data);
+  }
 
   function handleSortChange(e) {
     e.preventDefault();
@@ -11,15 +15,14 @@ export function useSort(sort, columns, data) {
     let value = e.target.value || e.target.attributes["data-sortby"].value;
     let key = e.target.id || "sortBy";
 
-    if (sortInfo.sortBy && value === sortInfo.sortBy) {
+    if (_sortInfo.sortBy && value === _sortInfo.sortBy) {
       key = "sortDirection";
-      value = `${sortInfo.sortDirection * -1}`;
+      value = `${_sortInfo.sortDirection * -1}`;
     }
 
-    setSortInfo((prev) => {
-      return { ...prev, [key]: value };
-    });
+    _sortInfo[key] = value;
+    setStatus("sortIt");
   }
 
-  return [sortInfo, sortHandler, handleSortChange];
+  return [_sortInfo, handleSortChange];
 }

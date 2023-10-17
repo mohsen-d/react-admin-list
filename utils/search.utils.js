@@ -1,7 +1,6 @@
 import { defaultSearch } from "../defaults";
 
-export function getSearchInfo(userSearch) {
-  const result = {};
-  Object.assign(result, defaultSearch, userSearch);
-  return result;
+export function setSearchInfo(output, userSearch) {
+  Object.assign(output, defaultSearch, userSearch);
+  return output;
 }

@@ -1,16 +1,19 @@
-import { useState } from "react";
-import { getSearchInfo } from "../utils";
+import { setSearchInfo } from "../utils";
 
-export function useSearch(search) {
-  const { handler: searchHandler, ...info } = getSearchInfo(search);
-  const [searchInfo, setSearchInfo] = useState(info);
+const _searchInfo = {};
+let _isSet = false;
 
-  function handleNewSearch(keyword) {
-    setSearchInfo((prev) => ({
-      ...prev,
-      keyword: keyword,
-    }));
+export function useSearch(search, setStatus) {
+  if (!_isSet) {
+    setSearchInfo(_searchInfo, search);
+    _isSet = true;
   }
 
-  return [searchInfo, searchHandler, handleNewSearch];
+  function handleNewSearch(keyword) {
+    _searchInfo.keyword = keyword;
+    setStatus("searchIt");
+    console.log("stateChange", _searchInfo);
+  }
+
+  return [_searchInfo, handleNewSearch];
 }

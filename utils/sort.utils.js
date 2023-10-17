@@ -1,16 +1,15 @@
 import { defaultSort } from "../defaults";
 
-export const getSortInfo = (userSort, columns, data) => {
-  const result = {};
-  Object.assign(result, defaultSort, userSort);
+export const setSortInfo = (output, userSort, columns, data) => {
+  Object.assign(output, defaultSort, userSort);
 
-  if (result.sortFields.length === 0)
-    result.sortFields = getSortFields(columns, data);
-  else formatStringSortFields(result.sortFields);
+  if (output.sortFields.length === 0)
+    output.sortFields = getSortFields(columns, data);
+  else formatStringSortFields(output.sortFields);
 
-  createProxy(result.sortFields);
+  createProxy(output.sortFields);
 
-  return result;
+  return output;
 };
 
 export const isSortable = (currentField, sortInfo) => {
