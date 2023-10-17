@@ -7,7 +7,6 @@ import { SortDirectionIcon } from "./sortDirectionIcon.component";
 
 export function Body({ list }) {
   const { options, loadingtdColSpan } = useContext(StaticsContext);
-  const { paginationInfo } = useContext(DynamicsContext);
 
   return (
     <tbody>
@@ -23,10 +22,7 @@ export function Body({ list }) {
             key={r[options.keyField]}
             id={r[options.keyField]}
             data={r}
-            rowNumber={
-              paginationInfo.recordsPerPage * (paginationInfo.currentPage - 1) +
-              (i + 1)
-            }
+            rowNumber={r.rowNumber}
           />
         ))
       )}
