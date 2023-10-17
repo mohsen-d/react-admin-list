@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import * as utils from "../utils";
+
 import {
   defaultAdd,
   defaultEdit,
@@ -8,8 +10,6 @@ import {
 } from "../defaults";
 
 import { DynamicsContext, HandlersContext, StaticsContext } from "../context";
-
-import * as utils from "../utils";
 
 import { useUpdateEffect, useMultiRef } from "../hooks";
 
@@ -51,6 +51,8 @@ export function List({
   commands = [],
   options = {},
 }) {
+  const [status, setStatus] = useState("done");
+
   const listColumns = utils.getColumns(columns, data);
   const listOptions = Object.assign(defaultOptions, options);
   const listStyles = Object.assign(defaultStyles, styles);
@@ -64,25 +66,27 @@ export function List({
   const listTableElmRef = useRef();
   const listContainerElmRef = useRef();
   const stickyElmsRef = useMultiRef();
+
   const confirm = useConfirm();
   const currentSize = useCurrentSize();
   const [formToRender, setFormToRender] = useState();
   const [loadingInfo, setIsLoading] = useLoading(loading);
-  const [
-    paginationInfo,
-    pagingHandler,
-    handlePageChange,
-    updatePagingAfterDataChange,
-  ] = usePagination(pagination, data);
-  const [searchInfo, searchHandler, handleNewSearch] = useSearch(search);
+  const [paginationInfo, handlePageChange] = usePagination(
+    pagination,
+    data.length,
+    setStatus
+  );
+
+  const [searchInfo, handleNewSearch] = useSearch(search, setStatus);
   const [selectedIds, handleSelection, handleSelectAll] = useSelection(
     data,
     listOptions.keyField
   );
-  const [sortInfo, sortHandler, handleSortChange] = useSort(
+  const [sortInfo, handleSortChange] = useSort(
     sort,
     listColumns,
-    data
+    data,
+    setStatus
   );
 
   if (listOptions.stickyTop)
@@ -91,25 +95,32 @@ export function List({
     }, []);
 
   useUpdateEffect(() => {
-    runHandler(false, "sort", sortHandler, sortInfo);
-
-    setFormToRender("");
-  }, [sortInfo]);
+    if (status === "sortIt") {
+      setStatus("sorting");
+      runHandler(false, "sort", sortInfo.handler, sortInfo);
+      setFormToRender("");
+    }
+  }, [status]);
 
   useUpdateEffect(() => {
-    if (paginationInfo.needToFetchData)
+    if (status === "changePage") {
+      setStatus("changingPage");
       runHandler(
         false,
         "pagination",
-        pagingHandler,
+        paginationInfo.handler,
         paginationInfo.currentPage
       );
-  }, [paginationInfo.currentPage]);
+    }
+  }, [status]);
 
   useUpdateEffect(() => {
-    runHandler(false, "search", searchHandler, searchInfo.keyword);
-    if (formToRender === "search") setFormToRender("");
-  }, [searchInfo]);
+    if (status === "searchIt") {
+      setStatus("searching");
+      runHandler(false, "search", searchInfo.handler, searchInfo.keyword);
+      if (formToRender === "search") setFormToRender("");
+    }
+  }, [status]);
 
   useEffect(() => {
     const tableWidth = listTableElmRef.current?.offsetWidth ?? 0;
@@ -135,14 +146,28 @@ export function List({
       });
       return;
     }
+    args = [
+      ...args,
+      paginationInfo.recalculateInfo.bind(paginationInfo),
+    ].filter((arg) => arg !== null);
 
     setIsLoading(true);
     loadingInfo.handler(handlerName, "started");
-    const result = await handler(...args);
+    await handler(...args);
     setIsLoading(false);
     loadingInfo.handler(handlerName, "ended");
-    updatePagingAfterDataChange(result, handlerName !== "sort");
   }
+
+  const listData = utils.defaultFetch(
+    data,
+    !search.handler && listOptions.search,
+    searchInfo,
+    !sort.handler && listOptions.sort,
+    sortInfo,
+    !pagination.handler && listOptions.pagination,
+    paginationInfo,
+    status
+  );
 
   return (
     <div>
@@ -184,7 +209,7 @@ export function List({
               {utils.listIsRealyEmpty(
                 loadingInfo.isLoading,
                 searchInfo.keyword,
-                data
+                listData
               ) ? (
                 <EmptyList />
               ) : (
@@ -213,7 +238,7 @@ export function List({
                       className={"table " + listStyles.table}
                     >
                       <Header columns={listColumns} />
-                      <Body list={data} />
+                      <Body list={listData} />
                       {listOptions.pagination && (
                         <Footer>
                           <Pagination

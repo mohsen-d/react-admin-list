@@ -12,7 +12,6 @@ export function useSearch(search, setStatus) {
   function handleNewSearch(keyword) {
     _searchInfo.keyword = keyword;
     setStatus("searchIt");
-    console.log("stateChange", _searchInfo);
   }
 
   return [_searchInfo, handleNewSearch];

@@ -182,7 +182,7 @@ export function RowCommands({ id }) {
             title="remove"
             icon="bi-trash-fill"
             className="btn text-secondary p-0"
-            handler={() => handleRemove([id])}
+            handler={(ids, cb) => handleRemove([id], cb)}
           />
         </div>
       )}
