@@ -37,12 +37,12 @@ const demos = {
 
 export default function App() {
   const [searchParams, setSearchParams] = useSearchParams();
-  let page = "basic";
+
   switch (window.location.pathname) {
-    case "/":
-    case "/index.html":
+    case PROJECT_URL:
+    case PROJECT_URL + "index.html":
       return demos["getStarted"];
-    case "/demo.html":
+    case PROJECT_URL + "demo.html":
       return demos["demo"];
     default:
       return demos[searchParams.get("page") ?? "basic"];
