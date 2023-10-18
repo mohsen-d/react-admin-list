@@ -64,6 +64,14 @@ export default function Basic() {
           and etc are generated based on the <mark>data</mark> passed into the{" "}
           <mark>&lt;List&gt;</mark>.
         </p>
+        <p>
+          <strong className="attention">
+            If you want to use custom handlers, It's recommended to provide
+            custom handlers for all the functionalities. For example, if you use
+            a custom <mark>search</mark> then provide a custom{" "}
+            <mark>paging</mark> as well.
+          </strong>
+        </p>
         <h4>List of props</h4>
         <ul>
           <li>

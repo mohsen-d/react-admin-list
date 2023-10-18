@@ -86,7 +86,8 @@ export default function Commands() {
             </li>
             <li>
               <mark>handler</mark> callback function to be called when user
-              clicks on the associated button.
+              clicks on the associated button. Two parameters will be passed
+              into the handler. <mark>ids</mark> and <mark>callback</mark>.
             </li>
           </ul>
         </p>
@@ -108,8 +109,10 @@ export default function Commands() {
       icon: "bi-eye",
       className: "btn btn-outline-primary",
       needsConfirm: true,
-      handler: async (ids) => {
+      handler: async (ids, callback) => {
         console.log("display", ids);
+        // Your logic
+        callback(newTotalRecords);
       },
     },
     {
@@ -117,14 +120,14 @@ export default function Commands() {
       icon: "bi-eye-slash",
       className: "btn btn-outline-secondary",
       needsConfirm: true,
-      handler: (ids) => console.log("hide", ids),
+      handler: (ids, callback) => console.log("hide", ids),
     },
   ],
   {
     title: "print",
     className: "btn btn-outline-primary",
     needsConfirm: false,
-    handler: (ids) => console.log("print", ids),
+    handler: (ids, callback) => console.log("print", ids),
   },
 ];
 

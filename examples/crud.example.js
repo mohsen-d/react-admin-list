@@ -58,11 +58,16 @@ export default function Crud() {
           But you can provide acustom handler by passing a <mark>add</mark> prop
           into <mark>list</mark> component.
         </p>
+        <strong className="attention">
+          A callback will be passed into the handler which shall be called with
+          the updated current number of records as its parameter.
+        </strong>
         <pre>
           <code className="language-javascript">
-            {`const handleAdd = () => {
+            {`const handleAdd = (callback) => {
   console.log("new btn clicked");
   // your custom logic
+  callback(newTotalRecords);
 };
 
 <List data={data} add={handleAdd}/>`}
@@ -88,8 +93,9 @@ export default function Crud() {
           prop into <mark>list</mark> component.
         </p>
         <p>
-          The id of the selected row will be passed into the custom handler in
-          the form of an array with a single item.
+          The id of the selected row along with a <mark>callback</mark> will be
+          passed into the custom handler in the form of an array with a single
+          item.
         </p>
 
         <p>
@@ -103,9 +109,10 @@ export default function Crud() {
         </p>
         <pre>
           <code className="language-javascript">
-            {`const handleEdit = (ids) => {
+            {`const handleEdit = (ids, callback) => {
   console.log("edit", ids); // output -> edit [1]
   // Your custom logic
+  callback(newTotalRecords);
 };
 
 <List data={data} edit={handleEdit}/>`}
@@ -122,8 +129,9 @@ export default function Crud() {
           </a>
         </p>
         <p>
-          List of the <mark>ids</mark> of the selected rows will be passed into
-          provided <mark>remove</mark> handler in an array.
+          List of the <mark>ids</mark> of the selected rows and a{" "}
+          <mark>callback</mark> will be passed into provided <mark>remove</mark>{" "}
+          handler in an array.
         </p>
         <p>
           <strong>
@@ -132,9 +140,10 @@ export default function Crud() {
         </p>
         <pre>
           <code className="language-javascript">
-            {`const handleRemove = (ids) => {
+            {`const handleRemove = (ids, callback) => {
   console.log("remove", ids); // output -> remove [1, 4, 6]
   // Your delete logic
+  callback(newTotalRecords);
 };
 <List data={data} remove={handleRemove}/>`}
           </code>

@@ -32,9 +32,11 @@ export default function Pagination() {
   const [listData, setData] = useState(fetchData());
 
   const pagination = {
-    handler: async (p) => {
+    handler: async (p, cb) => {
       currentPage = parseInt(p);
-      setData(fetchData());
+      const result = fetchData();
+      setData(result);
+      cb(data.length);
     },
     currentPage,
     recordsPerPage,
@@ -55,9 +57,9 @@ export default function Pagination() {
           </a>{" "}
           prop.
           <br />
-          Its default behaviour is to add <mark>&page=value</mark> to url. But
-          it can be customized by passing a <mark>pagination</mark> prop into{" "}
-          <mark>&lt;List&gt;</mark>.
+          Its default behaviour is to divide passed data into pages of{" "}
+          <mark>10</mark> records. But it can be customized by passing a{" "}
+          <mark>pagination</mark> prop into <mark>&lt;List&gt;</mark>.
         </p>
         <p>
           A custom <mark>pagination</mark> object contains:
@@ -65,7 +67,11 @@ export default function Pagination() {
         <ul>
           <li>
             <mark>handler</mark> which is the callback function to be called
-            when user clicks on oone of <mark>paging</mark> links.
+            when user clicks on one of <mark>paging</mark> links.{" "}
+            <mark>clicked page</mark> and a <mark>callback</mark> will be passed
+            into the handler. You need to call the <mark>callback</mark> after
+            the paging logic is done and pass into it the updated{" "}
+            <mark>number of total records</mark>
           </li>
           <li>
             <mark>currentPage</mark> : default value is <mark>0</mark>
@@ -80,9 +86,10 @@ export default function Pagination() {
         </ul>
         <pre>
           <code>{`const pagination = {
-  handler: async (p) => {
+  handler: async (p, cb) => {
     currentPage = parseInt(p);
     // Your custom logic
+    cb(newTotalRecords);
   },
   currentPage: 0,
   recordsPerPage: 4,

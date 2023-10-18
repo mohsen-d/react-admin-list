@@ -23,7 +23,7 @@ export default function Search() {
   const [listData, setListData] = useState(data);
 
   const search = {
-    handler: async (kw) => {
+    handler: async (kw, cb) => {
       keyword = kw;
       return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -38,8 +38,9 @@ export default function Search() {
                     d.pages == kw
                 );
           setListData(result);
+          cb(result.length);
           resolve();
-        }, 2000);
+        }, 1000);
       });
     },
     keyword: keyword,
@@ -69,7 +70,12 @@ export default function Search() {
         <ul>
           <li>
             <mark>handler</mark> which is the callback function to be called
-            when user presses <mark>Enter</mark>
+            when user presses <mark>Enter</mark>. <mark>Keyword</mark> and a{" "}
+            <mark>callback</mark> will be passed into the handler. You need to
+            call the <mark>callback</mark> after the search logic is done and
+            pass into it the updated{" "}
+            <mark>number of total records (number of found matches)</mark>{" "}
+            specially if <mark>paging</mark> is <mark>enabled</mark>.
           </li>
           <li>
             <mark>keyword</mark> which is the keyword (if exists) in first
@@ -82,11 +88,12 @@ export default function Search() {
 const [keyword, setKeyword] = useState("");
 
 const customSearch = {
-  handler: async (kw) => {
+  handler: async (kw, cb) => {
     console.log("searching " + kw);
     setKeyword(kw);
     const searchResult = await db.find();
     setListData(searchResult);
+    cb(searchResult.length)
   },
   keyword: keyword,
 };
