@@ -39,7 +39,7 @@ export default function GetStarted() {
             </a>
             <a
               className="with-hover border rounded-4 border-primary px-4 py-2"
-              href="/demo.html"
+              href="demo.html"
             >
               Demo
             </a>

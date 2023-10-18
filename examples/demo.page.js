@@ -175,10 +175,10 @@ export default function Demo() {
           <List
             data={listData}
             remove={removeHandler}
-            //search={search}
-            //sort={sort}
+            search={search}
+            sort={sort}
             columns={columns}
-            //pagination={pagination}
+            pagination={pagination}
             add={addHandler}
           />
         ) : (
