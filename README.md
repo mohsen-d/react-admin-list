@@ -8,8 +8,8 @@ to install run `npm i react-admin-list` in terminal
 
 ## Usage
 
-See [Docs](https://react-admin-list.github.io/examples.html).
+See [Docs](https://mohsen-d.github.io/react-admin-list/docs.html).
 
 ## Demo
 
-See [react-admin-list](https://react-admin-list.github.io//demo.html).
+See [react-admin-list](https://mohsen-d.github.io/react-admin-list/demo.html).
